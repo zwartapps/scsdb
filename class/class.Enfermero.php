@@ -31,6 +31,13 @@ class Enfermero extends Usuario {
        return $this->idCupo;
     }
 
+
+    public function getId(){
+        return $this->id;
+    }
+
+
+
     public function guardar() {
         $gestorDB = new GestorDB();
 

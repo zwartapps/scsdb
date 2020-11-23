@@ -4,12 +4,12 @@ require_once("../globales.php");
 require_once("../acceso/cargarSesion.php");
 require_once("../acceso/comprobarLogIn.php");
 require_once("../class/class.Usuario.php");
-require_once("../class/class.Enfermero.php");
+require_once("../class/class.Medico.php");
 require_once("../class/class.Rol.php");
 require_once("../class/class.Cupo.php");
 require_once("../class/class.PermisosWeb.php");
 require_once("../class/class.CentroSalud.php");
-
+require_once("../class/class.Paciente.php");
 
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
@@ -28,57 +28,57 @@ if (!$permisosWeb->permitido) {
 // Comprobamos si se ha cargado el formulario y hay que guardar los datos
 if (isset($_GET['guardar'])) {
     if ($_GET['id'] != 0) {
-        // Enfermero ya existente -> Hay que modificar
-        $enfermeroGuardar = new Enfermero($_GET['id']);
+        // PAciente ya existente -> Hay que modificar
+        $pacienteGuardar = new Paciente($_GET['id']);
     } else {
-        $enfermeroGuardar = new Enfermero();
-        $enfermeroGuardar->idRol = 2;
-        $enfermeroGuardar->numIntentosLogin = 0;
-        $enfermeroGuardar->ultimoAcceso = date("Y-m-d H:i:s");
+        $pacienteGuardar = new Paciente();
+        $pacienteGuardar->idRol = 4;
+        $pacienteGuardar->numIntentosLogin = 0;
+        $pacienteGuardar->ultimoAcceso = date("Y-m-d H:i:s");
     }
 
     foreach($_POST as $clave => $valor) {
         if ($clave != 'password') {
-            $enfermeroGuardar->$clave = $valor;
+            $pacienteGuardar->$clave = $valor;
         } else {
             if ($valor != '') {
                 // Actualizamos la contraseña
-                $enfermeroGuardar->setPassword($valor);
+                $pacienteGuardar->setPassword($valor);
             }
         }
     }
 
-    if ($enfermeroGuardar->guardar()) {
+    if ($pacienteGuardar->guardar()) {
         $mensajeGuardado = 'SE HA CREADO/ACTUALIZADO EL USUARIO';
     } else {
         $mensajeGuardado = 'HA OCURRIDO UN ERROR AL INTENTAR GUARDAR/CREAR EL USUARIO';
     }
-    $id = $enfermeroGuardar->id;
+    $id = $pacienteGuardar->id;
 }
 
 // Primero comprobamos si se trata de la edición de un usuario existente
 if (isset($_GET['id'])) {
     // Cargamos los datos del usuario existente
     $id = $_GET['id'];
-    $enfermero = new Enfermero($id);
+    $paciente = new Paciente($id);
 } else {
     $id = 0;
-    $enfermero = new Enfermero();
-    $enfermero->idRol = 3;
+    $paciente = new Paciente();
+    $paciente->idRol = 4;
 }
 
-if (isset($enfermeroGuardar)) {
-    $id = $enfermeroGuardar->id;
-    $enfermero = $enfermeroGuardar;
+if (isset($pacienteGuardar)) {
+    $id = $pacienteGuardar->id;
+    $paciente = $pacienteGuardar;
 }
 
-$rolEnfermero = new Rol($enfermero->idRol);
+$rolPaciente = new Rol($paciente->idRol);
 
 // Cargamos los roles
 $roles = cargarRoles('FETCH_OBJ');
 $htmlRoles = "";
 foreach($roles as $rol) {
-	if ($rol->id == $enfermero->idRol) {
+	if ($rol->id == $paciente->idRol) {
 		$htmlRoles .= "<option value='{$rol->id}' selected>{$rol->nombre}</option>";
 	} else {
 		$htmlRoles .= "<option value='{$rol->id}'>{$rol->nombre}</option>";
@@ -87,7 +87,7 @@ foreach($roles as $rol) {
 
 // Preparamos el select para ver si está bloqueado o no
 $htmlBloqueado = "";
-if ($enfermero->bloqueado) {
+if ($paciente->bloqueado) {
     $htmlBloqueado .= "<option selected value='1'>SÍ</option>";
     $htmlBloqueado .= "<option value='0'>NO</option>";
 } else {
@@ -99,7 +99,7 @@ if ($enfermero->bloqueado) {
 $centrosSalud = cargarCentrosSalud('FETCH_OBJ');
 $htmlCentrosSalud = "";
 foreach($centrosSalud as $centroSalud) {
-	if ($centroSalud->id == $enfermero->idCentroSalud) {
+	if ($centroSalud->id == $paciente->idCentroSalud) {
 		$htmlCentrosSalud .= "<option value='{$centroSalud->id}' selected>{$centroSalud->nombre}</option>";
 	} else {
 		$htmlCentrosSalud .= "<option value='{$centroSalud->id}'>{$centroSalud->nombre}</option>";
@@ -110,7 +110,7 @@ foreach($centrosSalud as $centroSalud) {
 $cupos = cargarCupos('FETCH_OBJ');
 $htmlCupos = "";
 foreach($cupos as $cupo) {
-	if ($cupo->id == $enfermero->idCupo) {
+	if ($cupo->id == $paciente->idCupo) {
 		$htmlCupos .= "<option value='{$cupo->id}' selected>{$cupo->nombre}</option>";
 	} else {
 		$htmlCupos .= "<option value='{$cupo->id}'>{$cupo->nombre}</option>";
@@ -136,9 +136,9 @@ foreach($cupos as $cupo) {
 
 <div class="container">
     <div class="row mt-4">
-        <h3>Ficha Usuario - Enfermero</h3>
+        <h3>Ficha Usuario - Paciente</h3>
         <div class="col-md-12 mt-4">
-            <form action="formEnfermero.php?guardar=1&id=<?php echo $id; ?>" method="POST">
+            <form action="formPaciente.php?guardar=1&id=<?php echo $id; ?>" method="POST">
                 <!-- Campo oculto con el id a modificar -->
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
 
@@ -150,7 +150,7 @@ foreach($cupos as $cupo) {
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Nombre</div>
                             </div>
-                            <input name="nombre" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nombre" value="<?php echo $enfermero->nombre; ?>">
+                            <input name="nombre" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nombre" value="<?php echo $paciente->nombre; ?>">
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -159,7 +159,7 @@ foreach($cupos as $cupo) {
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Apellidos</div>
                             </div>
-                            <input name="apellidos" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Apellidos" value="<?php echo $enfermero->apellidos; ?>">
+                            <input name="apellidos" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Apellidos" value="<?php echo $paciente->apellidos; ?>">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -168,7 +168,7 @@ foreach($cupos as $cupo) {
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Email</div>
                             </div>
-                            <input name="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Correo electrónico" value="<?php echo $enfermero->email; ?>">
+                            <input name="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Correo electrónico" value="<?php echo $paciente->email; ?>">
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,7 @@ foreach($cupos as $cupo) {
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Dirección</div>
                             </div>
-                            <input name="direccion" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Dirección postal" value="<?php echo $enfermero->direccion; ?>">
+                            <input name="direccion" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Dirección postal" value="<?php echo $paciente->direccion; ?>">
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -190,7 +190,7 @@ foreach($cupos as $cupo) {
                             <div class="input-group-prepend">
                                 <div class="input-group-text">CP</div>
                             </div>
-                            <input name="cp" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Código postal" value="<?php echo $enfermero->cp; ?>">
+                            <input name="cp" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Código postal" value="<?php echo $paciente->cp; ?>">
                         </div>
                     </div>
 					<div class="col-md-4">
@@ -223,7 +223,7 @@ foreach($cupos as $cupo) {
                             <div class="input-group-prepend">
                                 <div class="input-group-text">F. Nacimiento</div>
                             </div>
-                            <input name="fechaNacimiento" type="text" class="form-control" id="inlineFormInputGroup" placeholder="AAAA-MM-DD" value="<?php echo $enfermero->fechaNacimiento; ?>">
+                            <input name="fechaNacimiento" type="text" class="form-control" id="inlineFormInputGroup" placeholder="AAAA-MM-DD" value="<?php echo $paciente->fechaNacimiento; ?>">
                         </div>
                     </div>
 					<div class="col-md-4">
@@ -266,15 +266,15 @@ foreach($cupos as $cupo) {
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <label class="sr-only" for="inlineFormInputGroup">Nº Colegiado</label>
+                        <label class="sr-only" for="inlineFormInputGroup">Nº Historial</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">Nº Colegiado</div>
+                                <div class="input-group-text">Nº Historial</div>
                             </div>
-                            <input name="numColegiado" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nº Colegiado" value="<?php echo $enfermero->numColegiado; ?>">
+                            <input name="numColegiado" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nº Historial" value="<?php echo $paciente->numHistoria; ?>">
                         </div>
                     </div>
-                   
+   
                 </div>				
 				<div class="text-right">
 					<button type="button" class="btn btn-danger" onclick="window.history.back();">Cancelar</button>

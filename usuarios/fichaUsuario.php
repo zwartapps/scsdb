@@ -10,6 +10,7 @@ require_once("../class/class.Enfermero.php");
 require_once("../class/class.Rol.php");
 require_once("../class/class.PermisosWeb.php");
 require_once("../class/class.CentroSalud.php");
+require_once("../class/class.Paciente.php");
 
 
 // Cargamos el usuario

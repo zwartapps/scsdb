@@ -14,7 +14,7 @@ class Enfermero extends Usuario {
         parent::__construct($id);
 
         if ($id != 0) {
-            // Buscamos el médico en la BD
+            // Buscamos el enfermero en la BD
             $gestorDB = new GestorDB();
             $datosRequeridos = ['*'];
             $clausulaWhere = 'id = '.$id;
@@ -67,7 +67,7 @@ class Enfermero extends Usuario {
             }
 
             // Actualizamos la tabla de Enfermeros
-            $resultadoEnfermero = $gestorDB->updateDB(TABLA_MEDICOS,$datosEnfermero,$clavesPrimarias);
+            $resultadoEnfermero = $gestorDB->updateDB(TABLA_ENFERMEROS,$datosEnfermero,$clavesPrimarias);
             if ($resultadoEnfermero instanceof PDOException) {
                 // Ha ocurrido un error
                 // Hay que insertar en el log

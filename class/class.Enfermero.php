@@ -32,6 +32,7 @@ class Enfermero extends Usuario {
     }
 
 
+    //Metodos para la tarea
     public function getId(){
         return $this->id;
     }

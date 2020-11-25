@@ -18,6 +18,8 @@ define("TABLA_PERMISOS_WEB",'permisos_web');
 define("TABLA_MEDICOS",'medicos');
 define("TABLA_ENFERMEROS",'enfermeros');
 define("TABLA_PACIENTES",'pacientes');
+define("TABLA_CITAS", 'citas');
+
 
 class GestorDB {
     private $DB_HOST = DB_HOST;

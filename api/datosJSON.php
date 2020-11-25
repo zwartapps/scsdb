@@ -140,7 +140,17 @@ switch($tarea) {
                     $clausulaWhere .= " AND ".TABLA_CUPOS.".id = ".$rolSolicitado->tabla.".idCupo";
                     $clausulaWhere .= " AND ".TABLA_CENTROS_SALUD.".id = ".$rolSolicitado->tabla.".idCentroSalud";
                     $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol = ".$getRol;
-					break;
+                    break;
+                    
+                case 5:
+                    //Queremos obtener datos de citas
+                    $parametrosSelect  = TABLA_CITAS.".id, ".$rolSolicitado->tabla.".idCentroSalud, ";
+                    $parametrosSelect .= TABLA_CITAS.".nombre AS nombreCupo, ".TABLA_CENTROS_SALUD.".nombre AS nombreCentroSalud ";
+                    $tablasSql = TABLA_CITAS.", ".$rolSolicitado->tabla.", ".TABLA_CITAS.", ".TABLA_CENTROS_SALUD;
+
+                break;
+
+
 			}
 
             // Quiere a usuarios de un tipo. Hay que ver a cuáles puede acceder
@@ -171,6 +181,8 @@ switch($tarea) {
                 case 4:
                     // Paciente -> Sólo puede acceder a los médicos y enfermeros de su cupo
                     break;
+                    
+                 
             }
 
         } else {

@@ -54,7 +54,7 @@ class Medico extends Usuario
     public function esMiPaciente($id) {
         $paciente = new Paciente();
         
-        if($this->idcupo == $paciente->idCupo && $this->id == $paciente->id){
+        if($this->idcupo == $paciente->idCupo){
             return true;
         }  
         return false; 

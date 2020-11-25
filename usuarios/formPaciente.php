@@ -271,7 +271,7 @@ foreach($cupos as $cupo) {
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Nº Historial</div>
                             </div>
-                            <input name="numColegiado" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nº Historial" value="<?php echo $paciente->numHistoria; ?>">
+                            <input name="numHistoria" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nº Historial" value="<?php echo $paciente->numHistoria; ?>">
                         </div>
                     </div>
    

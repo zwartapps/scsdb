@@ -15,7 +15,7 @@ class Usuario {
     protected $numIntentosLogin;
     protected $ultimoAcceso;
     protected $bloqueado;
-
+ 
     const HASH = PASSWORD_DEFAULT;
     const HASH_COST = 10;
 

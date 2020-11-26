@@ -66,6 +66,17 @@ switch($tarea) {
         echo json_encode($datos);
         break;
 
+        case 'getCitas':
+
+        $conexionDB = new GestorDB();
+        $parametrosSelect = ['id','fechaHora','idPaciente','tipo'];
+        $datos = $conexionDB->getRecordsByParams(TABLA_CITAS, $parametrosSelect,null,'idPaciente, fechaHora ASC, tipo','FETCH_ASSOC', $limit, $offset);             
+
+        echo json_encode($datos);
+        
+        break;
+
+
 
 //    case 'getUsersByTipo':
 //        if ($usuario->idRol != 1) {
@@ -141,16 +152,6 @@ switch($tarea) {
                     $clausulaWhere .= " AND ".TABLA_CENTROS_SALUD.".id = ".$rolSolicitado->tabla.".idCentroSalud";
                     $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol = ".$getRol;
                     break;
-                    
-                case 5:
-                    //Queremos obtener datos de citas
-                    $parametrosSelect  = TABLA_CITAS.".id, ".$rolSolicitado->tabla.".idCentroSalud, ";
-                    $parametrosSelect .= TABLA_CITAS.".nombre AS nombreCupo, ".TABLA_CENTROS_SALUD.".nombre AS nombreCentroSalud ";
-                    $tablasSql = TABLA_CITAS.", ".$rolSolicitado->tabla.", ".TABLA_CITAS.", ".TABLA_CENTROS_SALUD;
-
-                break;
-
-
 			}
 
             // Quiere a usuarios de un tipo. Hay que ver a cuáles puede acceder

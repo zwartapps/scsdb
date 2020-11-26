@@ -2,16 +2,17 @@
 
 require_once __DIR__.'/../db/class.GestorDB.php';
 
-class Cupo {
+class Cita {
     protected $id;
-    protected $nombre;
-    protected $idCentroSalud;       
+    protected $fechaHora;
+    protected $idPaciente;       
+    protected $tipo;
 
     public function __construct($id = 0) {
         if ($id != 0) {
             // Consultamos los datos por id en la BD
             $gestorDB = new GestorDB();
-            $registros = $gestorDB->getRecordsByParams(TABLA_CUPOS, ['*'], 'id = '.$id, NULL, 'FETCH_ASSOC');
+            $registros = $gestorDB->getRecordsByParams(TABLA_CITAS, ['*'], 'id = '.$id, NULL, 'FETCH_ASSOC');
             foreach ($registros AS $registro) {
                 foreach ($registro AS $campo => $valor) {
                     $this->$campo = $valor;
@@ -37,16 +38,14 @@ class Cupo {
     }
 }
 
-// Devuelve un array en PHP con los datos de todos los cupos, pudiendo especificar o no un centro de salud en concreto
-function cargarCupos($tipoFetch = 'FETCH_ASSOC',$idCentroSalud = 0) {
+// Devuelve un array en PHP con los datos de todos las citas
+function cargarCitas($tipoFetch = 'FETCH_ASSOC',$idPaciente = 0) {
 	$gestorDB = new GestorDB();
-	if ($idCentroSalud != 0) {
-		$registros = $gestorDB->getRecordsByParams(TABLA_CUPOS, ['*'], 'idCentroSalud = '.$idCentroSalud, NULL, $tipoFetch);
-	} else {
-		$registros = $gestorDB->getRecordsByParams(TABLA_CUPOS, ['*'], NULL, NULL, $tipoFetch);
-	}		
+	if ($idPaciente != 0) {
+        $registros = $gestorDB->getRecordsByParams(TABLA_CITAS, ['*'], 'idPaciente = '.$idPaciente, NULL, $tipoFetch);
+        return $registros;
+	} 	
 	
-	return $registros;
 }
 
 ?>

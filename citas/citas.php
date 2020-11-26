@@ -50,7 +50,7 @@ if (!$permisosWeb->permitido) {
             <div class="col-md-12">
                 <table
                         data-toggle="table"
-                        data-url="<?php echo $GLOBALES['rutaPrincipal'] ;?>/api/datosJSON.php?tarea=getUsersForTable&getRol=5"
+                        data-url="<?php echo $GLOBALES['rutaPrincipal'] ;?>/api/datosJSON.php?tarea=getCitas"
                         data-locale="es-SP"
                         class="table-striped"
                         data-pagination="true"
@@ -64,10 +64,9 @@ if (!$permisosWeb->permitido) {
                         data-search="true">
                     <thead class="bg-warning">
                         <tr>
-                            <th data-sortable="true" data-field="id">ID</th>
-                            <th data-sortable="true" data-field="tipoCita">Tipo</th>                      
-                            <th data-field="nombreCentroSalud">Centro</th>
-                            <th data-field="fechaCita">Fecha</th>
+                            <th data-sortable="true" data-field="idPaciente">ID Paciente</th>
+                            <th data-sortable="true" data-field="tipo">Tipo</th> 
+                            <th data-field="fechaHora">Fecha y hora </th>
                             <th data-events="operateEvents" data-formatter="operateFormatter">Acciones</th>
                         </tr>
                     </thead>
@@ -86,9 +85,11 @@ if (!$permisosWeb->permitido) {
 <script>
     window.operateEvents = {
         'click .verFichaUsuario': function (e, value, row, index) {
-            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/usuarios/fichaUsuario.php?id="+row.id;
+            //Crear Cita en DB
+            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.id;
         },
-		'click .editarUsuario': function (e, value, row, index) {
+		'click .borrarCita': function (e, value, row, index) {
+            //Borrar Cita en DB
             window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/usuarios/formUsuario.php?id="+row.id;
         }
     }
@@ -96,11 +97,11 @@ if (!$permisosWeb->permitido) {
     function operateFormatter(value, row, index) {
         return [
             '<div class="text-center">',
-            '<a class="verFichaUsuario" href="javascript:void(0)" title="Ver ficha">',
-            '<i class="fas fa-chevron-circle-right"></i>',
+            '<a class="verFichaUsuario" href="javascript:void(0)" title="Nueva Cita">',
+            '<i class="fas fa-plus-circle"></i>',
             '</a>  ',
-			'<a class="editarUsuario" href="javascript:void(0)" title="Editar usuario">',
-            '<i class="fas fa-user-edit"></i>',
+			'<a class="borrarCita" href="javascript:void(0)" title="Borrar Cita">',
+            '<i class="fas fa-trash-alt"></i>',
             '</a>  ',
             '</div>'
         ].join('')

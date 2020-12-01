@@ -47,6 +47,9 @@ if (!$permisosWeb->permitido) {
             </div>
         </div>
         <div class="row">
+            <div class="col-md-8">
+                <a href="formCitas.php" class="btn btn-success" role="button">Nueva Cita</a>
+            </div>
             <div class="col-md-12">
                 <table
                         data-toggle="table"
@@ -84,21 +87,21 @@ if (!$permisosWeb->permitido) {
 
 <script>
     window.operateEvents = {
-        'click .verFichaUsuario': function (e, value, row, index) {
+        'click .modificarCita': function (e, value, row, index) {
             //Crear Cita en DB
             window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.id;
         },
 		'click .borrarCita': function (e, value, row, index) {
             //Borrar Cita en DB
-            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/usuarios/formUsuario.php?id="+row.id;
+            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.id;
         }
     }
 
     function operateFormatter(value, row, index) {
         return [
             '<div class="text-center">',
-            '<a class="verFichaUsuario" href="javascript:void(0)" title="Nueva Cita">',
-            '<i class="fas fa-plus-circle"></i>',
+            '<a class="modificarCita" href="javascript:void(0)" title="Nueva Cita">',
+            '<i class="fas fa-edit"></i>',
             '</a>  ',
 			'<a class="borrarCita" href="javascript:void(0)" title="Borrar Cita">',
             '<i class="fas fa-trash-alt"></i>',

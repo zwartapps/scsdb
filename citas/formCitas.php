@@ -15,11 +15,6 @@ require_once("../class/class.Cita.php");
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
 
-//Cargamos los datos de las citas
-$cita = new Cita();
-
-$paciente = new Paciente();
-
 // Cargamos los datos del Rol
 $rolUsuario = new Rol($usuario->idRol);
 
@@ -36,110 +31,43 @@ if (!$permisosWeb->permitido) {
 /***************Cambiar todo de paciente a CITA****************/
 
 
-
-
-
 // Comprobamos si se ha cargado el formulario y hay que guardar los datos
 if (isset($_GET['guardar'])) {
     if ($_GET['id'] != 0) {
         // Cita ya existente -> Hay que modificar
         $citaGuardar = new Cita($_GET['id']);
     } else {
-        $citaGuardar = new Cita();
-        /*
-        $citaGuardar->idRol = 4;
-        $citaGuardar->numIntentosLogin = 0;
-        $citaGuardar->ultimoAcceso = date("Y-m-d H:i:s");
-        */
+        $citaGuardar = new Cita();  
+        $citaGuardar->tipo = $_POST["tipo"];
+        $citaGuardar->fechaHora = $_POST["fechaHora"];
+        $citaGuardar->idPaciente = $usuario->id;
     }
 
-    /* 
-    foreach($_POST as $clave => $valor) {
-        if ($clave != 'password') {
-            $citaGuardar->$clave = $valor;
-        } else {
-            if ($valor != '') {
-                // Actualizamos la contraseña
-                $citaGuardar->setPassword($valor);
-            }
-        }
-    } 
-    */
-
     if ($citaGuardar->guardar()) {
-        $mensajeGuardado = 'SE HA CREADO/ACTUALIZADO EL USUARIO';
+        $mensajeGuardado = 'SE HA CREADO/ACTUALIZADO LA CITA';
     } else {
-        $mensajeGuardado = 'HA OCURRIDO UN ERROR AL INTENTAR GUARDAR/CREAR EL USUARIO';
+        $mensajeGuardado = 'HA OCURRIDO UN ERROR AL INTENTAR GUARDAR/CREAR LA CITA';
     }
     $id = $citaGuardar->id;
 }
 
-// Primero comprobamos si se trata de la edición de un usuario existente
+
+
+// Primero comprobamos si se trata de la edición de una cita existente
 if (isset($_GET['id'])) {
-    // Cargamos los datos del usuario existente
+    // Cargamos los datos de la cita existente
     $id = $_GET['id'];
     $cita = new Cita($id);
 } else {
     $id = 0;
-    $cita = new Cita();
-    //  $paciente->idRol = 4;
+    $cita = new Cita();  
 }
 
 if (isset($citaGuardar)) {
     $id = $citaGuardar->id;
     $cita = $citaGuardar;
 }
-/*
 
-$rolPaciente = new Rol($paciente->idRol);
-
-//Cargamos los roles
-$roles = cargarRoles('FETCH_OBJ');
-$htmlRoles = "";
-foreach($roles as $rol) {
-    if ($rol->id == $paciente->idRol) {
-        $htmlRoles .= "<option value='{$rol->id}' selected>{$rol->nombre}</option>";
-    } else {
-        $htmlRoles .= "<option value='{$rol->id}'>{$rol->nombre}</option>";
-    }
-}
-*/
-/*
-// Preparamos el select para ver si está bloqueado o no
-$htmlBloqueado = "";
-if ($paciente->bloqueado) {
-    $htmlBloqueado .= "<option selected value='1'>SÍ</option>";
-    $htmlBloqueado .= "<option value='0'>NO</option>";
-} else {
-    $htmlBloqueado .= "<option value='1'>SÍ</option>";
-    $htmlBloqueado .= "<option selected value='0'>NO</option>";
-}
-*/
-
-//$cita = new Cita($cita->idCita);
-
-// Cargamos los tipos de Cita
-$citas = cargarCitas('FETCH_OBJ');
-$htmlCitas = "";
-foreach ($citas as $cita) {
-    if ($cita->id == $paciente->idPaciente) {
-        $htmlCitas .= "<option value='{$cita->id}' selected>{$cita->tipo}</option>";
-    } else {
-        $htmlCitas .= "<option value='{$cita->id}'>{$cita->tipo}</option>";
-    }
-}
-/*
-// Cargamos los cupos
-$cupos = cargarCupos('FETCH_OBJ');
-$htmlCupos = "";
-foreach($cupos as $cupo) {
-    if ($cupo->id == $paciente->idCupo) {
-        $htmlCupos .= "<option value='{$cupo->id}' selected>{$cupo->nombre}</option>";
-    } else {
-        $htmlCupos .= "<option value='{$cupo->id}'>{$cupo->nombre}</option>";
-    }
-}
-*/
 
 ?>
 <!DOCTYPE html>
@@ -174,7 +102,7 @@ foreach($cupos as $cupo) {
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Nombre</div>
                                 </div>
-                                <input name="nombre" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nombre" value="<?php echo $paciente->nombre; ?>">
+                                <input name="nombre" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nombre" value="<?php echo $usuario->nombre; ?>">
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -183,7 +111,7 @@ foreach($cupos as $cupo) {
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Apellidos</div>
                                 </div>
-                                <input name="apellidos" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Apellidos" value="<?php echo $paciente->apellidos; ?>">
+                                <input name="apellidos" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Apellidos" value="<?php echo $usuario->apellidos; ?>">
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -192,7 +120,7 @@ foreach($cupos as $cupo) {
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Email</div>
                                 </div>
-                                <input name="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Correo electrónico" value="<?php echo $paciente->email; ?>">
+                                <input name="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Correo electrónico" value="<?php echo $usuario->email; ?>">
                             </div>
                         </div>
                     </div>
@@ -205,8 +133,9 @@ foreach($cupos as $cupo) {
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Tipo Cita</div>
                                 </div>
-                                <select name="tipo">
-                                    <?php echo $htmlCitas; ?>
+                                <select id="tipo" name="tipo">
+                                    <option value="MEDICA">MEDICA</option>
+                                    <option value="ENFERMERIA">ENFERMERIA</option>
                                 </select>
                             </div>
                         </div>

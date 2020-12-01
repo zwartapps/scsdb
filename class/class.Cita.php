@@ -43,20 +43,14 @@ class Cita {
         
         if ($this->id != 0) {
             // Hay que hacer un UPDATE
-            // Variables para la tabla USUARIOS
+            // Variables para la tabla CITAS
             $datosCita = array(
                 'id' => $this->id,
                 'tipo' => $this->tipo,
                 'fechaHora' => $this->fechaHora,
                 'idPaciente' => $this->idPaciente                
             );
-            
-            $datosPaciente = array(
-                'id' => $this->id,
-                'idCentroSalud' => $this->idCentroSalud,
-                'idCupo' => $this->idCupo,
-                'numHistoria' => $this->numHistoria
-            );
+           
             $clavesPrimarias = array('id' => $this->id);
             
             // Actualizamos la tabla de Citas
@@ -65,15 +59,7 @@ class Cita {
                 // Ha ocurrido un error
                 // Hay que insertar en el log
                 return false;
-            }
-            
-            /* Actualizamos la tabla de Pacientes
-            $resultadoUsuario = $gestorDB->updateDB(TABLA_PACIENTES, $datosPaciente, $clavesPrimarias);
-            if ($resultadoUsuario instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
-                return false;
-            }*/
+            } 
             
             return true;
         } else {
@@ -85,40 +71,20 @@ class Cita {
                 'idPaciente' => $this->idPaciente       
             );
             
-            /* Insertamos al usuario en la tabla de Usuarios
-            $resultadoUsuario = $gestorDB->insertIntoDB(TABLA_USUARIOS, $datosUsuario, ['id']);
-            if ($resultadoUsuario instanceof PDOException) {
+            // Insertamos la cita en la tabla de Citas
+             $resultadoCita = $gestorDB->insertIntoDB(TABLA_CITAS, $datosCita, ['id']);
+            if ($resultadoCita instanceof PDOException) {
                 // Ha ocurrido un error
                 // Hay que insertar en el log
-                echo $resultadoUsuario->getMessage();
+                echo $resultadoCita->getMessage();
                 return false;
             } else {
-                $this->id = $resultadoUsuario;
-            }
-           
-            $datosPaciente = array(
-                'id' => $this->id,
-                'numHistoria' => $this->numHistoria,
-                'idCentroSalud' => $this->idCentroSalud,
-                'idCupo' => $this->idCupo
-            );
-            
-            // Insertamos al médico en la tabla de pacientes
-            $datosPaciente = $gestorDB->insertIntoDB(TABLA_PACIENTES, $datosPaciente, []);
-            if ($datosPaciente instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
-                echo $datosPaciente->getMessage();
-                return false;
-            }*/
-            
+                $this->id = $resultadoCita;
+            } 
             return true;
         }
-    }
-    
-     
-    
-   
+    } 
+       
     
 }
 

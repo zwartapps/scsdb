@@ -84,8 +84,16 @@ class Cita {
             return true;
         }
     } 
-       
-    
+
+        public function eliminar() {
+        $gestorDB = new GestorDB();
+        $clavesPrimarias = array('id' => $this->id);
+        $resultado = $gestorDB->deleteDB(TABLA_CITAS, $clavesPrimarias);
+               
+}
+
+
+
 }
 
  // Devuelve un array en PHP con los datos de todos las citas
@@ -95,5 +103,8 @@ class Cita {
 
     return $registros;       
 }
+
+
+
 
 ?>

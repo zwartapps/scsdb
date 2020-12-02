@@ -15,6 +15,9 @@ require_once("../class/class.Cita.php");
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
 
+//Cargamos los datos de las citas
+$cita = new Cita();
+
 // Cargamos los datos del Rol
 $rolUsuario = new Rol($usuario->idRol);
 
@@ -28,21 +31,20 @@ if (!$permisosWeb->permitido) {
 
 
 
-/***************Cambiar todo de paciente a CITA****************/
-
-
 // Comprobamos si se ha cargado el formulario y hay que guardar los datos
 if (isset($_GET['guardar'])) {
     if ($_GET['id'] != 0) {
         // Cita ya existente -> Hay que modificar
         $citaGuardar = new Cita($_GET['id']);
+        $citaGuardar->tipo = $_POST["tipo"];
+        $citaGuardar->fechaHora = $_POST["fechaHora"];
+        //se crea una cita nueva
     } else {
         $citaGuardar = new Cita();  
         $citaGuardar->tipo = $_POST["tipo"];
         $citaGuardar->fechaHora = $_POST["fechaHora"];
         $citaGuardar->idPaciente = $usuario->id;
     }
-
     if ($citaGuardar->guardar()) {
         $mensajeGuardado = 'SE HA CREADO/ACTUALIZADO LA CITA';
     } else {

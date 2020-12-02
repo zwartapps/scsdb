@@ -5,9 +5,13 @@ include("../acceso/comprobarLogIn.php");
 include("../class/class.Usuario.php");
 include("../class/class.Rol.php");
 include("../class/class.PermisosWeb.php");
+include("../class/class.Cita.php");
 
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
+
+//Cargamos los datos de Citas
+$cita = new Cita();
 
 // Cargamos los datos del Rol
 $rol = new Rol($usuario->idRol);
@@ -20,6 +24,7 @@ if (!$permisosWeb->permitido) {
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -93,14 +98,15 @@ if (!$permisosWeb->permitido) {
         },
 		'click .borrarCita': function (e, value, row, index) {
             //Borrar Cita en DB
-            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.id;
+          //*********** */
+         // window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.id;
         }
     }
 
     function operateFormatter(value, row, index) {
         return [
             '<div class="text-center">',
-            '<a class="modificarCita" href="javascript:void(0)" title="Nueva Cita">',
+            '<a class="modificarCita" href="javascript:void(0)" title="Modificar Cita">',
             '<i class="fas fa-edit"></i>',
             '</a>  ',
 			'<a class="borrarCita" href="javascript:void(0)" title="Borrar Cita">',

@@ -92,20 +92,25 @@ if (!$permisosWeb->permitido) {
 
 <script>
     window.operateEvents = {
+        'click .verFichaCita': function (e, value, row, index) {
+            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/fichaCita.php?id="+row.id;
+        },
         'click .modificarCita': function (e, value, row, index) {
             //Crear Cita en DB
             window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.id;
         },
 		'click .borrarCita': function (e, value, row, index) {
-            //Borrar Cita en DB
-          //*********** */
-         // window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.id;
+            //Borrar Cita en DB                    
+          window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/eliminarCita.php?id="+row.id;
         }
     }
 
     function operateFormatter(value, row, index) {
         return [
             '<div class="text-center">',
+            '<a class="verFichaCita" href="javascript:void(0)" title="Modificar Cita">',
+            '<i class="fas fa-chevron-circle-right"></i>',
+            '</a>  ',
             '<a class="modificarCita" href="javascript:void(0)" title="Modificar Cita">',
             '<i class="fas fa-edit"></i>',
             '</a>  ',

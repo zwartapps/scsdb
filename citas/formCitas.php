@@ -38,12 +38,14 @@ if (isset($_GET['guardar'])) {
         $citaGuardar = new Cita($_GET['id']);
         $citaGuardar->tipo = $_POST["tipo"];
         $citaGuardar->fechaHora = $_POST["fechaHora"];
+        header('Location: citas.php');  
         //se crea una cita nueva
     } else {
         $citaGuardar = new Cita();  
         $citaGuardar->tipo = $_POST["tipo"];
         $citaGuardar->fechaHora = $_POST["fechaHora"];
         $citaGuardar->idPaciente = $usuario->id;
+        header('Location: citas.php');   
     }
     if ($citaGuardar->guardar()) {
         $mensajeGuardado = 'SE HA CREADO/ACTUALIZADO LA CITA';

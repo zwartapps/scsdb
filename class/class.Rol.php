@@ -46,8 +46,7 @@ class Rol {
 // Devuelve un array en PHP con los datos de todos los roles del Sistema
 function cargarRoles($tipoFetch = 'FETCH_ASSOC') {
 	$gestorDB = new GestorDB();
-	$registros = $gestorDB->getRecordsByParams(TABLA_ROLES, ['*'], NULL, NULL, $tipoFetch);
-	
+	$registros = $gestorDB->getRecordsByParams(TABLA_ROLES, ['*'], NULL, NULL, $tipoFetch);	
 	return $registros;
 }
 

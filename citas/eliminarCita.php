@@ -24,25 +24,16 @@ if (!$permisosWeb->permitido) {
     exit;
 }
 
-/*
-//Borrar la cita
-if (isset($_GET['borrar=1'])) { 
-    $citaBorrar = new Cita($_GET['id']);    
-    $citaBorrar->eliminar('id');    
-}
-*/
-
-if (isset($_GET['borrar'])) {   
-        $citaBorrar = new Cita($_GET['id']);    
-        $citaBorrar->eliminar();
-        header('Location: citas.php');   
+if (isset($_GET['borrar'])) {
+    $citaBorrar = new Cita($_GET['id']);
+    $citaBorrar->eliminar();
+    header('Location: citas.php');
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <title>Pruebas PHP - CIP</title>
     <meta charset="UTF-8">
@@ -53,27 +44,24 @@ if (isset($_GET['borrar'])) {
 
 
 <body>
-<!-- Incluimos el menú de navegación -->
-<?php include("../menu/".$rol->menuWeb); ?>
-
-<!-- Activamos la sección del menú -->
-<script>$("#menu-citas").addClass('active')</script>
-
-
-<div class="container">
-<h2>Está seguro que quiere eliminar esta cita?</h2>
-
-<a href="eliminarCita.php?borrar=1&id=<?php echo $_GET['id']; ?>" class="btn btn-success" type="button" name="confirmar" id="confirmar">Eliminar</a>
-<button class="btn btn-danger" type="button" onclick="window.history.back();">Cancelar</button>
-
-</div>
-
-
-
-<footer class="footer">
     <!-- Incluimos el menú de navegación -->
-    <?php include("../footer.php"); ?>
-</footer>
+    <?php include("../menu/" . $rol->menuWeb); ?>
+
+    <!-- Activamos la sección del menú -->
+    <script>
+        $("#menu-citas").addClass('active')
+    </script>
+
+    <div class="container">
+        <h2>Está seguro que quiere eliminar esta cita?</h2>
+        <a href="eliminarCita.php?borrar=1&id=<?php echo $_GET['id']; ?>" class="btn btn-success" type="button" name="confirmar" id="confirmar">Eliminar</a>
+        <button class="btn btn-danger" type="button" onclick="window.history.back();">Cancelar</button>
+    </div>
+
+    <footer class="footer">
+        <!-- Incluimos el menú de navegación -->
+        <?php include("../footer.php"); ?>
+    </footer>
 </body>
 
 </html>

@@ -11,6 +11,7 @@ require_once("../class/class.Rol.php");
 require_once("../class/class.PermisosWeb.php");
 require_once("../class/class.CentroSalud.php");
 require_once("../class/class.Paciente.php");
+require_once("../class/class.Cita.php");
 
 
 // Cargamos el usuario
@@ -29,7 +30,12 @@ if (!$permisosWeb->permitido) {
 
 // Cargamos el usuario del que se quiere mostrar su ficha y su rol
 $id = $_GET['id'];
-$usuarioFicha = new Usuario($id);
+$idPaciente = $_GET['idPaciente'];
+
+$citaFicha = new Cita($id);
+
+//$idPaciente = new Usuario()
+$usuarioFicha = new Usuario($idPaciente);
 $rolUsuarioFicha = new Rol($usuarioFicha->idRol);
 
 // Cargamos la clase correspondiente y preparamos el contenido a partir de la plantilla

@@ -72,6 +72,7 @@ if (!$permisosWeb->permitido) {
                         data-search="true">
                     <thead class="bg-warning">
                         <tr>
+                        <th data-sortable="true" data-field="id">ID Cita</th>
                             <th data-sortable="true" data-field="idPaciente">ID Paciente</th>
                             <th data-sortable="true" data-field="tipo">Tipo</th> 
                             <th data-field="fechaHora">Fecha y hora </th>
@@ -92,8 +93,9 @@ if (!$permisosWeb->permitido) {
 
 <script>
     window.operateEvents = {
+        //Ver detalles de la cita pasamos id de la cita y idPAciente de la tabla
         'click .verFichaCita': function (e, value, row, index) {
-            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/fichaCita.php?id="+row.id;
+            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/fichaCita.php?id="+row.id+"&idPaciente="+row['idPaciente'];
         },
         'click .modificarCita': function (e, value, row, index) {
             //Crear Cita en DB
@@ -108,13 +110,13 @@ if (!$permisosWeb->permitido) {
     function operateFormatter(value, row, index) {
         return [
             '<div class="text-center">',
-            '<a class="verFichaCita" href="javascript:void(0)" title="Modificar Cita">',
+            '<a class="verFichaCita" href="javascript:void(0)" title="Ver Cita">',
             '<i class="fas fa-chevron-circle-right"></i>',
             '</a>  ',
             '<a class="modificarCita" href="javascript:void(0)" title="Modificar Cita">',
             '<i class="fas fa-edit"></i>',
             '</a>  ',
-			'<a class="borrarCita" href="javascript:void(0)" title="Borrar Cita">',
+			'<a class="borrarCita" href="javascript:void(0)" title="Eliminar Cita">',
             '<i class="fas fa-trash-alt"></i>',
             '</a>  ',
             '</div>'

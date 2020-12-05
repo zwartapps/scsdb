@@ -17,6 +17,7 @@ require_once("../class/class.Cita.php");
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
 
+
 // Cargamos los datos del Rol
 $rol = new Rol($usuario->idRol);
 
@@ -32,24 +33,29 @@ if (!$permisosWeb->permitido) {
 $id = $_GET['id'];
 $idPaciente = $_GET['idPaciente'];
 
+$paciente = new Paciente($idPaciente);
+
 $citaFicha = new Cita($id);
-$rolCita = new Rol($citaFicha->idRol);
+$rolCitaFicha = new Rol($citaFicha->idRol);
 
-
-/*
 $usuarioFicha = new Usuario($idPaciente);
 $rolUsuarioFicha = new Rol($usuarioFicha->idRol);
 
 // Cargamos la clase correspondiente y preparamos el contenido a partir de la plantilla
 $usuarioFicha = new $rolUsuarioFicha->clase($usuarioFicha->id);
 $seccionHTML = file_get_contents($rolUsuarioFicha->plantilla);
-*/
 
-//$citaFicha = new $rolCita->clase($citaFicha->id);
-$seccionHTML = file_get_contents($citaFicha->plantilla);
+$citaFicha = new $rolCitaFicha->clase($citaFicha->id);
+$seccionHTML = file_get_contents($rolCitaFicha->plantilla);
+
+//$citaFicha = new $rolCitaFicha->clase($citaFicha->id);
+//$seccionHTML = file_get_contents($citaFicha->plantilla);
+
+//Cargamos los datos de la cita
+$fechaHora = new Cita($citaFicha->fechaHora);
+$tipo = new Cita($citaFicha->tipo);
 
 
-/*
 // Cargamos el centro de Salud
 $centroSaludUsuarioFicha = new CentroSalud($usuarioFicha->idCentroSalud);
 
@@ -58,27 +64,13 @@ $fechaHora = new Cita($citaFicha->fechaHora);
 
 // Cargamos el cupo
 $cupoFicha = new Cupo($usuarioFicha->idCupo);
-*/
 
-
-// Reemplazamos cada atributo del objeto en la plantilla
-$busqueda = array();
-$reemplazo = array();
-foreach ($citaFicha->getAtributos() as $atributo => $valor) {
-    array_push($busqueda, '{$'.$atributo.'}');
-    array_push($reemplazo, $valor);
-}
-// Reemplazamos también la edad
-$seccionHTML = str_replace($busqueda,$reemplazo,$seccionHTML);
-
-/*
-$seccionHTML = str_replace('{$edad}',$usuarioFicha->getEdad(),$seccionHTML);
-$seccionHTML = str_replace('{$tipo}',$rolUsuarioFicha->nombre,$seccionHTML);
+//Cargamos la plantilla con la informacion requerida
+$seccionHTML = str_replace('{$fechaHora}', $citaFicha->fechaHora, $seccionHTML);
+$seccionHTML = str_replace('{$tipo}',$citaFicha->tipo,$seccionHTML);
 $seccionHTML = str_replace('{$centroSanitario}',$centroSaludUsuarioFicha->nombre,$seccionHTML);
 $seccionHTML = str_replace('{$codigoCupo}',$cupoFicha->nombre,$seccionHTML);
-*/
-
-$seccionHTML = str_replace('{$fechaHora}', $citaFicha->fechaHora, $seccionHTML);
+$seccionHTML = str_replace('{$numHistoria}',$paciente->numHistoria,$seccionHTML);
 
 ?>
 <!DOCTYPE html>

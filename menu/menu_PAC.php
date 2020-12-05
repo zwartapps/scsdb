@@ -9,10 +9,10 @@
 
             <li id="menu-home" class="nav-item">
                 <a class="nav-link" href="<?php echo $GLOBALES['rutaPrincipal']?>/<?php echo $rol->indexWeb; ?>"><i class="fa fa-home fa-3x" aria-hidden="true"></i><br>Inicio</a>
+            </li>            
+            <li id="menu-medicos" class="nav-item">
+                <a class="nav-link" href="<?php echo $GLOBALES['rutaPrincipal']?>/usuarios/medicos.php"><i class="fas fa-user-md fa-3x"></i><br>Médicos</a>
             </li>
-            <li id="menu-enfermeros" class="nav-item">
-                <a class="nav-link" href="<?php echo $GLOBALES['rutaPrincipal']?>/usuarios/enfermeros.php"><i class="fas fa-user-nurse fa-3x"></i><br>Enfermeros</a>
-            </li>   
             <li id="menu-citas" class="nav-item">
                 <a class="nav-link" href="<?php echo $GLOBALES['rutaPrincipal']?>/citas/citas.php"><i class="fas fa-calendar fa-3x"></i><br>Citas</a>
             </li>

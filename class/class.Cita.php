@@ -51,7 +51,7 @@ class Cita {
                 'fechaHora' => $this->fechaHora,
                 'idPaciente' => $this->idPaciente                
             );
-           
+            
             $clavesPrimarias = array('id' => $this->id);
             
             // Actualizamos la tabla de Citas
@@ -73,7 +73,7 @@ class Cita {
             );
             
             // Insertamos la cita en la tabla de Citas
-             $resultadoCita = $gestorDB->insertIntoDB(TABLA_CITAS, $datosCita, ['id']);
+            $resultadoCita = $gestorDB->insertIntoDB(TABLA_CITAS, $datosCita, ['id']);
             if ($resultadoCita instanceof PDOException) {
                 // Ha ocurrido un error
                 // Hay que insertar en el log
@@ -85,33 +85,27 @@ class Cita {
             return true;
         }
     } 
-
-        public function eliminar() {
+    
+    public function eliminar() {
         $gestorDB = new GestorDB();
         $clavesPrimarias = array('id' => $this->id);
         $resultado = $gestorDB->deleteDB(TABLA_CITAS, $clavesPrimarias);
-               
+        
+    }
+    
+    public function getAtributos() {
+        return get_object_vars($this);
+    }
+    
+    
+    
+    
 }
 
-public function getAtributos() {
-    return get_object_vars($this);
-}
-
-
-
-
-}
-
- // Devuelve un array en PHP con los datos de todos las citas
- function cargarCitas ($tipoFetch = 'FETCH_ASSOC') {
+// Devuelve un array en PHP con los datos de todos las citas
+function cargarCitas ($tipoFetch = 'FETCH_ASSOC') {
     $gestorDB = new GestorDB();
     $registros = $gestorDB->getRecordsByParams(TABLA_CITAS, ['*'], NULL, NULL, $tipoFetch);
-
+    
     return $registros;       
 }
-
-
-
-
-
-?>

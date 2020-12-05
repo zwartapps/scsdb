@@ -95,7 +95,7 @@ if (!$permisosWeb->permitido) {
     window.operateEvents = {
         //Ver detalles de la cita pasamos id de la cita y idPAciente de la tabla
         'click .verFichaCita': function (e, value, row, index) {
-            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/fichaCita.php?id="+row.id+"&idPaciente="+row['idPaciente'];
+            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/usuarios/fichaCita.php?id="+row.id+"&idPaciente="+row['idPaciente'];
         },
         'click .modificarCita': function (e, value, row, index) {
             //Crear Cita en DB

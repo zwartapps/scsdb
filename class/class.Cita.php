@@ -7,6 +7,7 @@ class Cita {
     protected $fechaHora;
     protected $idPaciente;       
     protected $tipo;
+    protected $plantilla;
     
     public function __construct($id = 0) {
         if ($id != 0) {
@@ -92,6 +93,11 @@ class Cita {
                
 }
 
+public function getAtributos() {
+    return get_object_vars($this);
+}
+
+
 
 
 }
@@ -103,6 +109,7 @@ class Cita {
 
     return $registros;       
 }
+
 
 
 

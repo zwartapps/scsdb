@@ -47,16 +47,16 @@ if ($nombrePaginaActual != $rol->indexWeb) {
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+        <div class="col-md-4">
                 <div class="card bg-light border-warning mb-3" style="max-width: 18rem;">
-                    <div class="card-header text-secondary font-weight-bold">Enfermeros</div>
+                    <div class="card-header text-secondary font-weight-bold">Médicos</div>
                     <div class="card-body">
-                        <h3 class="card-title text-center text-warning"><i class="fas fa-user-nurse fa-3x"></i></h3>
-                        <p class="card-text text-info"></p>
+                        <h3 class="card-title text-center text-warning"><i class="fas fa-user-md fa-3x"></i></h3>
+                        <p class="card-text text-info text-justify"></p>
                     </div>
-                    <div class="card-footer text-center"><a href="./usuarios/enfermeros.php" type="button" class="btn border-secondary btn-warning"><i class="fas fa-arrow-circle-right"></i></a></div>
+                    <div class="card-footer text-center"><a href="./usuarios/medicos.php" type="button" class="btn border-secondary btn-warning"><i class="fas fa-arrow-circle-right"></i></a></div>
                 </div>
-            </div>            
+            </div>         
             <div class="col-md-4">
                 <div class="card bg-light border-warning mb-3" style="max-width: 18rem;">
                     <div class="card-header text-secondary font-weight-bold">Citas</div>

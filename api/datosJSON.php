@@ -67,34 +67,36 @@ switch($tarea) {
         break;
 
         case 'getCitas':
-
+             
+        //Mostramos solamente las citas del paciente logeado 
+        $clausulaWhere = TABLA_CITAS.".idPaciente = ".$usuario->id;
         $conexionDB = new GestorDB();
         $parametrosSelect = ['id','fechaHora','idPaciente','tipo'];
-        $datos = $conexionDB->getRecordsByParams(TABLA_CITAS, $parametrosSelect,null,'idPaciente, fechaHora ASC, tipo','FETCH_ASSOC', $limit, $offset);             
-
+        $datos = $conexionDB->getRecordsByParams(TABLA_CITAS, $parametrosSelect, $clausulaWhere, 'fechaHora ASC, tipo','FETCH_ASSOC', $limit, $offset);             
+        
         echo json_encode($datos);
         
         break;
 
 
 
-//    case 'getUsersByTipo':
-//        if ($usuario->idRol != 1) {
-//            exit;
-//        }
-//        $conexionDB = new GestorDB();
-//        $parametrosSelect = ['id','nombre','apellidos','email','idRol'];
-//        $datos = $conexionDB->getRecordsByParams(TABLA_USUARIOS, $parametrosSelect,null,'apellidos ASC','FETCH_ASSOC');
-//
-//        // Añadimos el nombre del rol al que pertenece el usuario
-//        foreach($datos as $indice => $dato) {
-//            foreach($dato as $campo => $valor) {
-//                $rol = new Rol($dato['idRol']);
-//                $datos[$indice]['nombreRol'] = $rol->nombre;
-//            }
-//        }
-//        echo json_encode($datos);
-//        break;
+   case 'getUsersByTipo':
+       if ($usuario->idRol != 1) {
+           exit;
+       }
+       $conexionDB = new GestorDB();
+       $parametrosSelect = ['id','nombre','apellidos','email','idRol'];
+       $datos = $conexionDB->getRecordsByParams(TABLA_USUARIOS, $parametrosSelect,null,'apellidos ASC','FETCH_ASSOC');
+
+       // Añadimos el nombre del rol al que pertenece el usuario
+       foreach($datos as $indice => $dato) {
+           foreach($dato as $campo => $valor) {
+               $rol = new Rol($dato['idRol']);
+               $datos[$indice]['nombreRol'] = $rol->nombre;
+           }
+       }
+       echo json_encode($datos);
+       break;
 
     case 'getUsersForTable':
         $parametrosSelect = null;
@@ -178,9 +180,30 @@ switch($tarea) {
 
                 case 3:
                     // Enfermero -> Sólo puede acceder a los médicos y pacientes de su cupo
+                    $enfermero = new Enfermero($usuario->id);    
+
+                    // Garantizamos que el enfermero está en el mismo cupo que los usuarios solicitados
+                    $clausulaWhere .= " AND ".$rolSolicitado->tabla.".idCupo = ".$enfermero->getCupo();
+
+                    // Los enfermeros pueden consultar enfermeros y pacientes
+                    $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol IN (3,4)";
+
+                    $sortBy = 'apellidos, nombre ASC';
+
                     break;
                 case 4:
-                    // Paciente -> Sólo puede acceder a los médicos y enfermeros de su cupo
+                    // Paciente -> Sólo puede acceder a los médicos de su cupo             
+                    $paciente = new Paciente($usuario->id);    
+
+                    // Garantizamos que el enfermero está en el mismo cupo que los usuarios solicitados
+                    $clausulaWhere .= " AND ".$rolSolicitado->tabla.".idCupo = ".$paciente->getCupo();
+
+                    // Los pacientes pueden consultar medicos y citas
+                    $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol IN (2)";
+                    $clausulaWhere .= " AND ".TABLA_CITAS.".idPaciente = ".$paciente->idPaciente;
+
+                    $sortBy = 'apellidos, nombre ASC';
+
                     break;
                     
                  

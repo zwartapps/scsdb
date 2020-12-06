@@ -68,8 +68,6 @@ if(true){
 }
 
 
-
-
 // Reemplazamos cada atributo del objeto en la plantilla
 $busqueda = array();
 $reemplazo = array();

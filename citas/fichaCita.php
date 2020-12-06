@@ -52,21 +52,17 @@ $fechaHora = new Cita($citaFicha->fechaHora);
 // Cargamos el cupo
 $cupoFicha = new Cupo($usuarioFicha->idCupo);
 
-
 //Cargamos nombre sanitario que toca para este paciente dependiendo del tipo de la cita
-$enfermeroCita = new Enfermero();
-$medicoCita = new Medico();
+$enfermeroCita = new Enfermero($usuarioFicha->id);
+$medicoCita = new Medico($usuarioFicha->id);
 
 $medicoCupo = $medicoCita->getCupo();
 $enfermeroCupo = $enfermeroCita->getCupo();
 
-if(true){
- // print_r("SOY TU MEDICO!");
-  print_r($medicoCupo);
-  print_r($enfermeroCupo);
-  print_r($cupoFicha);
-}
 
+if($medicoCita->esMiPaciente($idPaciente)){
+    print_r("SOY TU MEDICO!");
+}
 
 // Reemplazamos cada atributo del objeto en la plantilla
 $busqueda = array();
@@ -78,10 +74,11 @@ foreach ($citaFicha->getAtributos() as $atributo => $valor) {
 
 //Cargamos la plantilla con la informacion requerida
 $seccionHTML = str_replace('{$fechaHora}', $citaFicha->fechaHora, $seccionHTML);
-$seccionHTML = str_replace('{$tipo}',$citaFicha->tipo,$seccionHTML);
-$seccionHTML = str_replace('{$centroSanitario}',$centroSaludUsuarioFicha->nombre,$seccionHTML);
-$seccionHTML = str_replace('{$codigoCupo}',$cupoFicha->nombre,$seccionHTML);
-$seccionHTML = str_replace('{$numHistoria}',$paciente->numHistoria,$seccionHTML);
+$seccionHTML = str_replace('{$tipo}',$citaFicha->tipo, $seccionHTML);
+$seccionHTML = str_replace('{$centroSanitario}',$centroSaludUsuarioFicha->nombre, $seccionHTML);
+$seccionHTML = str_replace('{$codigoCupo}',$cupoFicha->nombre, $seccionHTML);
+$seccionHTML = str_replace('{$numHistoria}',$paciente->numHistoria, $seccionHTML);
+$seccionHTML = str_replace('{$nombre}',$medicoCita->nombre, $seccionHTML);
 
 ?>
 <!DOCTYPE html>

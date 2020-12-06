@@ -7,7 +7,7 @@ class Cita {
     protected $fechaHora;
     protected $idPaciente;       
     protected $tipo;
-    protected $plantilla;
+    protected $plantilla;    
     
     public function __construct($id = 0) {
         if ($id != 0) {
@@ -38,9 +38,8 @@ class Cita {
         return false;
     }
     
-    
     public function guardar() {
-        $gestorDB = new GestorDB();
+        $gestorDB = new GestorDB();       
         
         if ($this->id != 0) {
             // Hay que hacer un UPDATE
@@ -89,16 +88,12 @@ class Cita {
     public function eliminar() {
         $gestorDB = new GestorDB();
         $clavesPrimarias = array('id' => $this->id);
-        $resultado = $gestorDB->deleteDB(TABLA_CITAS, $clavesPrimarias);
-        
+        $resultado = $gestorDB->deleteDB(TABLA_CITAS, $clavesPrimarias);        
     }
     
     public function getAtributos() {
         return get_object_vars($this);
-    }
-    
-    
-    
+    }    
 }
 
 // Devuelve un array en PHP con los datos de todos las citas

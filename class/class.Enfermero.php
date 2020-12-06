@@ -130,6 +130,23 @@ class Enfermero extends Usuario {
             return true;
         }
     }
+
+    public function __set($atributo, $valor) {
+        if (property_exists($this,$atributo)) {
+            $this->$atributo = $valor;
+            return true;
+        }
+        return false;
+    }
+
+    public function __get($atributo) {
+        if (property_exists($this,$atributo)) {
+            return $this->$atributo;
+        }
+        return false;
+    }
+
+
 }
 
 ?>

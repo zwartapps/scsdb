@@ -12,10 +12,7 @@ class Medico extends Usuario
     protected $especialidad = "";
     protected $idPaciente = "";    
     
-    
-    public function __construct($id = 0)
-    {
-        
+    public function __construct($id = 0){        
         parent::__construct($id);
         
         if ($id != 0) {
@@ -45,7 +42,7 @@ class Medico extends Usuario
         $cupoMedico = $this->idCupo;
         $enfermero = new Enfermero();
         $cupoEnfermero = $enfermero->getCupo();
-  
+        
         if ($cupoMedico == $cupoEnfermero) {
             $idEnfermero = $enfermero->getId();
         }
@@ -58,8 +55,7 @@ class Medico extends Usuario
             return true;
         }  
         return false; 
-    }
-    
+    }    
     
     public function guardar()
     {
@@ -150,11 +146,35 @@ class Medico extends Usuario
             if ($resultadoMedico instanceof PDOException) {
                 // Ha ocurrido un error
                 // Hay que insertar en el log
-                echo $resultadoMedico->getMessage();
+                
+                print_r( $resultadoMedico->getMessage());
+                $error = new Log();
                 return false;
             }
             
             return true;
         }
     }
+    
+    public function __set($atributo, $valor) {
+        if (property_exists($this,$atributo)) {
+            $this->$atributo = $valor;
+            return true;
+        }
+        return false;
+    }
+
+    public function __get($atributo) {
+        if (property_exists($this,$atributo)) {
+            return $this->$atributo;
+        }
+        return false;
+    }
+
+
+    public function getAtributos() {
+        return get_object_vars($this);
+    }
+    
+    
 }

@@ -19,7 +19,7 @@ define("TABLA_MEDICOS",'medicos');
 define("TABLA_ENFERMEROS",'enfermeros');
 define("TABLA_PACIENTES",'pacientes');
 define("TABLA_CITAS", 'citas');
-
+define("TABLA_LOG", 'log');
 
 class GestorDB {
     private $DB_HOST = DB_HOST;
@@ -87,7 +87,7 @@ class GestorDB {
             $resultados = $consultaSql->fetchAll(constant('PDO::'.$tipoFetch));
             return $resultados;
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo $e->getMessage();         
             return $e;
         }
     }

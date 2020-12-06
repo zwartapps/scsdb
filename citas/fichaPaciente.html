@@ -2,10 +2,10 @@
     <div class="container">
         <div class="row mb-4">
             <div class="col-md-12">
-                <h3>Ficha de Usuario - Paciente</h3>
+                <h3>Ficha de Cita</h3>
             </div>
         </div>
-
+        
         <!-- FICHA GENERAL DE USUARIO -->
         <div class="row">
             <div class="col-md-12">
@@ -14,25 +14,16 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Nombre</h6>
+                                    <h6 class="mb-0">Nombre Sanitario</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {$nombre}
                                 </div>
                             </div>
-                            <hr>
+                            <hr>                  
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Apellidos</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {$apellidos}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Fecha Cita</h6>
+                                    <h6 class="mb-0">Fecha y hora Cita</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {$fechaHora}
@@ -41,16 +32,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">F. Nacimiento</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {$fechaNacimiento} ({$edad} años)
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Tipo de usuario</h6>
+                                    <h6 class="mb-0">Tipo de Cita</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {$tipo}
@@ -62,7 +44,7 @@
             </div>
         </div>
         <!-- FIN FICHA GENERAL DE USUARIO -->
-
+        
         <!-- FICHA ESPECÍFICA PACIENTE -->
         <div class="row">
             <div class="col-md-12">

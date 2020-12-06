@@ -49,6 +49,7 @@ foreach ($usuarioFicha->getAtributos() as $atributo => $valor) {
     array_push($busqueda, '{$'.$atributo.'}');
     array_push($reemplazo, $valor);
 }
+
 // Reemplazamos también la edad
 $seccionHTML = str_replace($busqueda,$reemplazo,$seccionHTML);
 $seccionHTML = str_replace('{$edad}',$usuarioFicha->getEdad(),$seccionHTML);

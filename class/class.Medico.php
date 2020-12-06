@@ -9,7 +9,8 @@ class Medico extends Usuario
     protected $numColegiado;
     protected $idCentroSalud = "";
     protected $idCupo = "";
-    protected $especialidad = "";    
+    protected $especialidad = "";
+    protected $idPaciente = "";    
     
     
     public function __construct($id = 0)
@@ -51,9 +52,8 @@ class Medico extends Usuario
         return $idEnfermero;
     }
     
-    public function esMiPaciente($id) {
-        $paciente = new Paciente();
-        
+    public function esMiPaciente($idPaciente) {
+        $paciente = new Paciente($idPaciente);        
         if($this->idCupo == $paciente->idCupo){
             return true;
         }  

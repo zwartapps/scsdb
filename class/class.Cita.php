@@ -99,7 +99,6 @@ class Cita {
     
     
     
-    
 }
 
 // Devuelve un array en PHP con los datos de todos las citas

@@ -39,15 +39,8 @@ $citaFicha = new Cita($id);
 $usuarioFicha = new $rolUsuarioFicha->clase($usuarioFicha->id);
 $seccionHTML = file_get_contents($rolUsuarioFicha->plantilla);
 
-//Cargamos los datos de la cita
-$fechaHora = new Cita($citaFicha->fechaHora);
-$tipo = new Cita($citaFicha->tipo);
-
 // Cargamos el centro de Salud
 $centroSaludUsuarioFicha = new CentroSalud($usuarioFicha->idCentroSalud);
-
-//Cargamos los datos de la cita
-$fechaHora = new Cita($citaFicha->fechaHora);
 
 // Cargamos el cupo
 $cupoFicha = new Cupo($usuarioFicha->idCupo);
@@ -58,11 +51,6 @@ $medicoCita = new Medico($usuarioFicha->id);
 
 $medicoCupo = $medicoCita->getCupo();
 $enfermeroCupo = $enfermeroCita->getCupo();
-
-
-if($medicoCita->esMiPaciente($idPaciente)){
-    print_r("SOY TU MEDICO!");
-}
 
 // Reemplazamos cada atributo del objeto en la plantilla
 $busqueda = array();
@@ -91,13 +79,11 @@ $seccionHTML = str_replace('{$nombre}',$medicoCita->nombre, $seccionHTML);
     <?php include("../lib/header.php"); ?>
 </head>
 
-
 <body>
 <!-- Incluimos el menú de navegación -->
 <?php include("../menu/".$rol->menuWeb); ?>
 
 <?php echo $seccionHTML; ?>
-
 
 <footer class="footer">
     <!-- Incluimos el menú de navegación -->

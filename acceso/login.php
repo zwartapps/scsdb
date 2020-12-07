@@ -19,14 +19,12 @@ if (isset($_SESSION['nombreUsuario'])) {
     <?php include("../lib/header.php"); ?>
 </head>
 
-
 <body>
 <!-- Incluimos el menú de navegación -->
 <?php include($menuACargar); ?>
 
 <!-- Activamos la sección del menú -->
 <script>$("#menu-home").addClass('active')</script>
-
 
 <section class="mt-3">
     <div class="container">
@@ -63,7 +61,7 @@ if (isset($_SESSION['nombreUsuario'])) {
                             </div>
                             <div class="form-row">
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-success mb-2"><i class="fas fa-sign-in-alt"></i> Acceder</button>
+                                    <button type="submit" class="btn btn-success mb-2"><i class="fas fa-sign-in-alt"></i>Acceder</button>
                                 </div>
                             </div>
                         </form>

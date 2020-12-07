@@ -9,7 +9,6 @@ require_once(__DIR__."/../class/class.PermisosWeb.php");
 require_once(__DIR__."/../class/class.Enfermero.php");
 require_once(__DIR__."/../class/class.Paciente.php");
 
-
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
 
@@ -69,19 +68,22 @@ switch($tarea) {
         echo json_encode($datos);
     break;
     
-    case 'getCitas':
+    case 'getCitas':      
         
-        //Mostramos solamente las citas del paciente logeado 
-        $clausulaWhere = TABLA_CITAS.".idPaciente = ".$usuario->id;
+        //admin puede ver todas las citas
+        if($usuario->id==1){          
+            $clausulaWhere = null;
+        }
+        else {
+            //Mostramos solamente las citas del paciente logeado
+            $clausulaWhere = TABLA_CITAS.".idPaciente = ".$usuario->id;    
+        }
         $conexionDB = new GestorDB();
         $parametrosSelect = ['id','fechaHora','idPaciente','tipo'];
-        $datos = $conexionDB->getRecordsByParams(TABLA_CITAS, $parametrosSelect, $clausulaWhere, 'fechaHora ASC, tipo','FETCH_ASSOC', $limit, $offset);             
-        
-        echo json_encode($datos);
+        $datos = $conexionDB->getRecordsByParams(TABLA_CITAS, $parametrosSelect, $clausulaWhere, 'fechaHora ASC, tipo','FETCH_ASSOC', $limit, $offset);        
+        echo json_encode($datos);        
         
     break;
-    
-    
     
     case 'getUsersByTipo':
         if ($usuario->idRol != 1) {
@@ -174,8 +176,9 @@ switch($tarea) {
                     // Garantizamos que el médico está en el mismo cupo que los usuarios solicitados
                     $clausulaWhere .= " AND ".$rolSolicitado->tabla.".idCupo = ".$medico->getCupo();
                     
-                    // Los médicos pueden consultar médicos, enfermeros y pacientes
+                    // Los médicos pueden consultar médicos, enfermeros y pacientes y citas
                     $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol IN (2,3,4)";
+                    
                     
                     $sortBy = 'apellidos, nombre ASC';
                 break;
@@ -187,8 +190,8 @@ switch($tarea) {
                     // Garantizamos que el enfermero está en el mismo cupo que los usuarios solicitados
                     $clausulaWhere .= " AND ".$rolSolicitado->tabla.".idCupo = ".$enfermero->getCupo();
                     
-                    // Los enfermeros pueden consultar enfermeros y pacientes
-                    $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol IN (3,4)";
+                    // Los enfermeros pueden consultar medicos y pacientes
+                    $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol IN (2,4)";
                     
                     $sortBy = 'apellidos, nombre ASC';
                     
@@ -205,9 +208,7 @@ switch($tarea) {
                     
                     $sortBy = 'apellidos, nombre ASC';
                     
-                break;
-                
-                
+                break;    
             }
             
         } else {
@@ -219,8 +220,7 @@ switch($tarea) {
             $parametrosSelect = TABLA_USUARIOS.".id, ".TABLA_USUARIOS.".nombre, ".TABLA_USUARIOS.".apellidos, ".TABLA_USUARIOS.".email, ".TABLA_USUARIOS.".idRol";
             $clausulaWhere = null;
             $sortBy = 'apellidos, nombre ASC';
-        }
-        
+        }        
         
         if ($search != null) {
             // Se quiere buscar por parámetro de búsqueda

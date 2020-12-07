@@ -119,7 +119,6 @@ class GestorDB {
         }
     }
 
-
     public function updateDB($tabla,$datos,$clavesPrimarias) {
         $arrayConsultaParametrosPDO = array();
         $arrayConsultaValores = array();

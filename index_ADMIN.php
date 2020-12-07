@@ -31,14 +31,12 @@ if ($nombrePaginaActual != $rol->indexWeb) {
     <?php include("./lib/header.php"); ?>
 </head>
 
-
 <body>
 <!-- Incluimos el menú de navegación -->
 <?php include("./menu/".$rol->menuWeb); ?>
 
 <!-- Activamos la sección del menú -->
 <script>$("#menu-home").addClass('active')</script>
-
 
 <section class="mt-3">
     <div class="container">
@@ -99,9 +97,6 @@ if ($nombrePaginaActual != $rol->indexWeb) {
                     </div>
                     <div class="card-footer text-center"><a href="./citas/citas.php" type="button" class="btn border-secondary btn-warning"><i class="fas fa-arrow-circle-right"></i></a></div>
                 </div>
-            </div>
-            <div class="col-md-4">
-
             </div>
         </div>
     </div>

@@ -1,5 +1,4 @@
 <?php
-
 require_once("../globales.php");
 require_once("../acceso/cargarSesion.php");
 require_once("../acceso/comprobarLogIn.php");
@@ -31,14 +30,12 @@ if (!$permisosWeb->permitido) {
     <?php include("../lib/header.php"); ?>
 </head>
 
-
 <body>
 <!-- Incluimos el menú de navegación -->
 <?php include("../menu/".$rol->menuWeb); ?>
 
 <!-- Activamos la sección del menú -->
 <script>$("#menu-usuarios").addClass('active')</script>
-
 
 <section class="mt-3 mb-4">
     <div class="container">

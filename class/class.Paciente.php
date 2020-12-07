@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../db/class.GestorDB.php';
 require_once __DIR__ . '/class.Rol.php';
 
@@ -11,8 +10,7 @@ class Paciente extends Usuario
     protected $idCupo = "";
     
     public function __construct($id = 0)
-    {
-        
+    {        
         parent::__construct($id);
         
         if ($id != 0) {
@@ -141,5 +139,4 @@ class Paciente extends Usuario
         }
         return false;
     }
-
 }

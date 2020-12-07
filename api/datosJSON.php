@@ -68,8 +68,7 @@ switch($tarea) {
         echo json_encode($datos);
     break;
     
-    case 'getCitas':      
-        
+    case 'getCitas':
         //admin puede ver todas las citas
         if($usuario->id==1){          
             $clausulaWhere = null;
@@ -178,8 +177,7 @@ switch($tarea) {
                     
                     // Los médicos pueden consultar médicos, enfermeros y pacientes y citas
                     $clausulaWhere .= " AND ".TABLA_USUARIOS.".idRol IN (2,3,4)";
-                    
-                    
+                                        
                     $sortBy = 'apellidos, nombre ASC';
                 break;
                 
@@ -300,4 +298,3 @@ switch($tarea) {
         echo json_encode($resultado);
     break;
 }
-?>

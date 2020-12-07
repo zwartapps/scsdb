@@ -1,5 +1,4 @@
 <?php
-
 require_once("../globales.php");
 require_once("../acceso/cargarSesion.php");
 require_once("../acceso/comprobarLogIn.php");
@@ -117,7 +116,6 @@ foreach($cupos as $cupo) {
 	}
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -128,7 +126,6 @@ foreach($cupos as $cupo) {
     <meta name="description" content="Web con diferentes formularios para hacer pruebas con PHP">
     <?php include("../lib/header.php"); ?>
 </head>
-
 
 <body>
 <!-- Incluimos el menú de navegación -->
@@ -284,7 +281,6 @@ foreach($cupos as $cupo) {
         </div>
     </div>
 </div>
-
 
 <footer class="footer">
     <!-- Incluimos el menú de navegación -->

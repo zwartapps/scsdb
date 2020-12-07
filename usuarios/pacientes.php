@@ -30,14 +30,12 @@ if (!$permisosWeb->permitido) {
     <?php include("../lib/header.php"); ?>
 </head>
 
-
 <body>
 <!-- Incluimos el menú de navegación -->
 <?php include("../menu/".$rol->menuWeb); ?>
 
 <!-- Activamos la sección del menú -->
 <script>$("#menu-pacientes").addClass('active')</script>
-
 
 <section class="mt-3">
     <div class="container">

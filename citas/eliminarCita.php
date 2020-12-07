@@ -10,9 +10,6 @@ include("../class/class.Cita.php");
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
 
-//Cargamos los datos de Citas
-$id;
-
 // Cargamos los datos del Rol
 $rol = new Rol($usuario->idRol);
 
@@ -41,7 +38,6 @@ if (isset($_GET['borrar'])) {
     <meta name="description" content="Web con diferentes formularios para hacer pruebas con PHP">
     <?php include("../lib/header.php"); ?>
 </head>
-
 
 <body>
     <!-- Incluimos el menú de navegación -->

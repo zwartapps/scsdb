@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__.'/../db/class.GestorDB.php';
 require_once __DIR__.'/class.Rol.php';
 
@@ -26,18 +25,13 @@ class Enfermero extends Usuario {
             }
         }
     }
-
     public function getCupo() {
        return $this->idCupo;
     }
 
-
-    //Metodos para la tarea
     public function getId(){
         return $this->id;
     }
-
-
 
     public function guardar() {
         $gestorDB = new GestorDB();
@@ -145,8 +139,6 @@ class Enfermero extends Usuario {
         }
         return false;
     }
-
-
 }
 
 ?>

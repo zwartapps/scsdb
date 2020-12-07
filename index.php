@@ -17,14 +17,12 @@ $usuario = new Usuario($_SESSION['usuario']);
     <?php include("./lib/header.php"); ?>
 </head>
 
-
 <body>
 <!-- Incluimos el menú de navegación -->
 <?php include("./menu/menu-notlog.php"); ?>
 
 <!-- Activamos la sección del menú -->
 <script>$("#menu-home").addClass('active')</script>
-
 
 <section class="mt-3">
     <div class="container">

@@ -1,5 +1,4 @@
 <?php
-
 require_once("../globales.php");
 require_once("../acceso/cargarSesion.php");
 require_once("../acceso/comprobarLogIn.php");
@@ -29,8 +28,6 @@ if (!$permisosWeb->permitido) {
     exit;
 }
 
-
-
 // Comprobamos si se ha cargado el formulario y hay que guardar los datos
 if (isset($_GET['guardar'])) {
     if ($_GET['id'] != 0) {
@@ -55,8 +52,6 @@ if (isset($_GET['guardar'])) {
     $id = $citaGuardar->id;
 }
 
-
-
 // Primero comprobamos si se trata de la edición de una cita existente
 if (isset($_GET['id'])) {
     // Cargamos los datos de la cita existente
@@ -72,7 +67,6 @@ if (isset($citaGuardar)) {
     $cita = $citaGuardar;
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -84,7 +78,6 @@ if (isset($citaGuardar)) {
     <meta name="description" content="Web con diferentes formularios para hacer pruebas con PHP">
     <?php include("../lib/header.php"); ?>
 </head>
-
 
 <body>
     <!-- Incluimos el menú de navegación -->
@@ -161,7 +154,6 @@ if (isset($citaGuardar)) {
             </div>
         </div>
     </div>
-
 
     <footer class="footer">
         <!-- Incluimos el menú de navegación -->

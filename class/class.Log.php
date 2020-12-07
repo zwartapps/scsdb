@@ -26,7 +26,6 @@ class Log {
         }
     }
     
-    //Metodos para la tarea
     public function getId(){
         return $this->id;
     }

@@ -1,5 +1,4 @@
 <?php
-
 require_once("../globales.php");
 require_once("../acceso/cargarSesion.php");
 require_once("../acceso/comprobarLogIn.php");
@@ -9,7 +8,6 @@ require_once("../class/class.Rol.php");
 require_once("../class/class.Cupo.php");
 require_once("../class/class.PermisosWeb.php");
 require_once("../class/class.CentroSalud.php");
-
 
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
@@ -117,7 +115,6 @@ foreach($cupos as $cupo) {
 	}
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -128,7 +125,6 @@ foreach($cupos as $cupo) {
     <meta name="description" content="Web con diferentes formularios para hacer pruebas con PHP">
     <?php include("../lib/header.php"); ?>
 </head>
-
 
 <body>
 <!-- Incluimos el menú de navegación -->
@@ -238,9 +234,7 @@ foreach($cupos as $cupo) {
                         </div>
                     </div>
                 </div>
-
-                <hr>
-				
+                <hr>				
 				<!-- Campos centro de salud y cupo -->
                 <div class="row">
                     <div class="col-md-4">
@@ -273,8 +267,7 @@ foreach($cupos as $cupo) {
                             </div>
                             <input name="numColegiado" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nº Colegiado" value="<?php echo $enfermero->numColegiado; ?>">
                         </div>
-                    </div>
-                   
+                    </div>                   
                 </div>				
 				<div class="text-right">
 					<button type="button" class="btn btn-danger" onclick="window.history.back();">Cancelar</button>
@@ -284,7 +277,6 @@ foreach($cupos as $cupo) {
         </div>
     </div>
 </div>
-
 
 <footer class="footer">
     <!-- Incluimos el menú de navegación -->

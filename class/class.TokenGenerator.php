@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__.'/../lib/jwt/src/BeforeValidException.php';
 require_once __DIR__.'/../lib/jwt/src/ExpiredException.php';
 require_once __DIR__.'/../lib/jwt/src/SignatureInvalidException.php';

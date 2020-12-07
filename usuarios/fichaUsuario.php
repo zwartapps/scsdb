@@ -1,5 +1,4 @@
 <?php
-
 require_once("../globales.php");
 require_once("../acceso/cargarSesion.php");
 require_once("../acceso/comprobarLogIn.php");
@@ -11,7 +10,6 @@ require_once("../class/class.Rol.php");
 require_once("../class/class.PermisosWeb.php");
 require_once("../class/class.CentroSalud.php");
 require_once("../class/class.Paciente.php");
-
 
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);
@@ -68,13 +66,11 @@ $seccionHTML = str_replace('{$codigoCupo}',$cupoFicha->nombre,$seccionHTML);
     <?php include("../lib/header.php"); ?>
 </head>
 
-
 <body>
 <!-- Incluimos el menú de navegación -->
 <?php include("../menu/".$rol->menuWeb); ?>
 
 <?php echo $seccionHTML; ?>
-
 
 <footer class="footer">
     <!-- Incluimos el menú de navegación -->

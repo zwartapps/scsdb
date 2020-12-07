@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../db/class.GestorDB.php';
 require_once __DIR__ . '/class.Rol.php';
 
@@ -33,7 +32,6 @@ class Medico extends Usuario
         return $this->idCupo;
     }
     
-    //Metodos de la Tarea
     public function getCentroSanitario() {
         return $this->idCentroSalud;
     }
@@ -150,8 +148,7 @@ class Medico extends Usuario
                 print_r( $resultadoMedico->getMessage());
                 $error = new Log();
                 return false;
-            }
-            
+            }            
             return true;
         }
     }
@@ -171,10 +168,8 @@ class Medico extends Usuario
         return false;
     }
 
-
     public function getAtributos() {
         return get_object_vars($this);
-    }
-    
+    }    
     
 }

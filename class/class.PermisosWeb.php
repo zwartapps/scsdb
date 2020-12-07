@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__.'/../db/class.GestorDB.php';
 
 class PermisosWeb {

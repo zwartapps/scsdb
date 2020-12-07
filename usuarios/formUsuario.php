@@ -1,12 +1,10 @@
 <?php
-
 require_once("../globales.php");
 require_once("../acceso/cargarSesion.php");
 require_once("../acceso/comprobarLogIn.php");
 require_once("../class/class.Usuario.php");
 require_once("../class/class.Rol.php");
 require_once("../class/class.PermisosWeb.php");
-
 
 // Cargamos el usuario
 $usuario = new Usuario($GLOBAL_SESSION[CAMPO_DATOS_SESION]['id']);

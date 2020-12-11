@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2020 a las 17:35:20
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.3.9
+-- Host: 127.0.0.1
+-- Generation Time: Dec 07, 2020 at 10:11 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `scs`
+-- Database: `scs`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `centros_salud`
+-- Table structure for table `centros_salud`
 --
 
 CREATE TABLE `centros_salud` (
@@ -36,7 +35,7 @@ CREATE TABLE `centros_salud` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `centros_salud`
+-- Dumping data for table `centros_salud`
 --
 
 INSERT INTO `centros_salud` (`id`, `nombre`, `direccion`, `telefono`) VALUES
@@ -48,7 +47,41 @@ INSERT INTO `centros_salud` (`id`, `nombre`, `direccion`, `telefono`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cupos`
+-- Table structure for table `citas`
+--
+
+CREATE TABLE `citas` (
+  `id` int(11) NOT NULL,
+  `tipo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `fechaHora` datetime NOT NULL,
+  `idPaciente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `citas`
+--
+
+INSERT INTO `citas` (`id`, `tipo`, `fechaHora`, `idPaciente`) VALUES
+(24, 'MEDICA', '2020-12-23 13:13:00', 142),
+(31, 'ENFERMERIA', '2020-12-31 12:25:00', 143),
+(32, 'MEDICA', '2020-12-11 12:52:00', 145),
+(33, 'ENFERMERIA', '2020-12-17 13:31:00', 25),
+(34, 'ENFERMERIA', '2020-12-17 13:32:00', 25),
+(36, 'MEDICA', '2020-12-29 14:08:00', 25),
+(37, 'MEDICA', '2020-12-12 16:38:00', 26),
+(38, 'ENFERMERIA', '2020-12-15 16:38:00', 26),
+(39, 'MEDICA', '2020-12-13 16:43:00', 26),
+(40, 'MEDICA', '2020-12-18 16:49:00', 26),
+(41, 'MEDICA', '2020-12-24 17:14:00', 26),
+(42, 'ENFERMERIA', '2020-12-11 19:29:00', 25),
+(44, 'MEDICA', '2020-12-25 20:08:00', 24),
+(45, 'ENFERMERIA', '2020-12-31 20:08:00', 24),
+(46, 'MEDICA', '2020-12-26 20:34:00', 25);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cupos`
 --
 
 CREATE TABLE `cupos` (
@@ -58,7 +91,7 @@ CREATE TABLE `cupos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `cupos`
+-- Dumping data for table `cupos`
 --
 
 INSERT INTO `cupos` (`id`, `nombre`, `idCentroSalud`) VALUES
@@ -76,7 +109,7 @@ INSERT INTO `cupos` (`id`, `nombre`, `idCentroSalud`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `enfermeros`
+-- Table structure for table `enfermeros`
 --
 
 CREATE TABLE `enfermeros` (
@@ -87,7 +120,7 @@ CREATE TABLE `enfermeros` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `enfermeros`
+-- Dumping data for table `enfermeros`
 --
 
 INSERT INTO `enfermeros` (`id`, `numColegiado`, `idCentroSalud`, `idCupo`) VALUES
@@ -100,12 +133,29 @@ INSERT INTO `enfermeros` (`id`, `numColegiado`, `idCentroSalud`, `idCupo`) VALUE
 (20, 12796, 3, 7),
 (21, 4569, 4, 8),
 (22, 4455, 4, 9),
-(23, 5544, 4, 10);
+(23, 5544, 4, 10),
+(141, 123, 3, 4);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `medicos`
+-- Table structure for table `log`
+--
+
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `observaciones` text COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `fechaHora` datetime NOT NULL,
+  `navegador` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sistemaOperativo` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `medicos`
 --
 
 CREATE TABLE `medicos` (
@@ -117,7 +167,7 @@ CREATE TABLE `medicos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `medicos`
+-- Dumping data for table `medicos`
 --
 
 INSERT INTO `medicos` (`id`, `numColegiado`, `idCentroSalud`, `idCupo`, `especialidad`) VALUES
@@ -131,130 +181,140 @@ INSERT INTO `medicos` (`id`, `numColegiado`, `idCentroSalud`, `idCupo`, `especia
 (11, 126598, 4, 8, 'DIGESTIVO'),
 (12, 65874, 4, 9, 'TRAUMATOLOGÍA'),
 (13, 124588, 4, 10, 'UROLOGÍA'),
-(131, 123987555, 1, 1, 'NEFROLOGÍA');
+(131, 123987555, 1, 1, 'NEFROLOGÍA'),
+(132, 12345, 1, 1, 'FAMILIA');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pacientes`
+-- Table structure for table `pacientes`
 --
 
 CREATE TABLE `pacientes` (
   `id` int(11) NOT NULL,
   `idCentroSalud` int(11) NOT NULL,
-  `idCupo` int(11) NOT NULL
+  `idCupo` int(11) NOT NULL,
+  `numHistoria` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `pacientes`
+-- Dumping data for table `pacientes`
 --
 
-INSERT INTO `pacientes` (`id`, `idCentroSalud`, `idCupo`) VALUES
-(24, 1, 1),
-(25, 1, 1),
-(26, 1, 1),
-(27, 1, 1),
-(28, 1, 1),
-(29, 1, 1),
-(30, 1, 1),
-(31, 1, 1),
-(32, 1, 1),
-(33, 1, 1),
-(34, 1, 2),
-(35, 1, 2),
-(36, 1, 2),
-(37, 1, 2),
-(38, 1, 2),
-(39, 1, 2),
-(40, 1, 2),
-(41, 1, 2),
-(42, 1, 2),
-(43, 1, 2),
-(44, 1, 3),
-(45, 1, 3),
-(46, 1, 3),
-(47, 1, 3),
-(48, 1, 3),
-(49, 1, 3),
-(50, 1, 3),
-(51, 1, 3),
-(52, 1, 3),
-(53, 1, 3),
-(54, 2, 4),
-(55, 2, 4),
-(56, 2, 4),
-(57, 2, 4),
-(58, 2, 4),
-(59, 2, 4),
-(60, 2, 4),
-(61, 2, 4),
-(62, 2, 4),
-(63, 2, 4),
-(64, 2, 5),
-(65, 2, 5),
-(66, 2, 5),
-(67, 2, 5),
-(68, 2, 5),
-(69, 2, 5),
-(70, 2, 5),
-(71, 2, 5),
-(72, 2, 5),
-(73, 2, 5),
-(74, 3, 6),
-(75, 3, 6),
-(76, 3, 6),
-(77, 3, 6),
-(78, 3, 6),
-(79, 3, 6),
-(80, 3, 6),
-(81, 3, 6),
-(82, 3, 6),
-(83, 3, 6),
-(84, 3, 7),
-(85, 3, 7),
-(86, 3, 7),
-(87, 3, 7),
-(88, 3, 7),
-(89, 3, 7),
-(90, 3, 7),
-(91, 3, 7),
-(92, 3, 7),
-(93, 3, 7),
-(94, 4, 8),
-(95, 4, 8),
-(96, 4, 8),
-(97, 4, 8),
-(98, 4, 8),
-(99, 4, 8),
-(100, 4, 8),
-(101, 4, 8),
-(102, 4, 8),
-(103, 4, 8),
-(104, 4, 9),
-(105, 4, 9),
-(106, 4, 9),
-(107, 4, 9),
-(108, 4, 9),
-(109, 4, 9),
-(110, 4, 9),
-(111, 4, 9),
-(112, 4, 9),
-(113, 4, 9),
-(114, 4, 10),
-(115, 4, 10),
-(116, 4, 10),
-(117, 4, 10),
-(118, 4, 10),
-(119, 4, 10),
-(120, 4, 10),
-(121, 4, 10),
-(122, 4, 10),
-(123, 4, 10);
+INSERT INTO `pacientes` (`id`, `idCentroSalud`, `idCupo`, `numHistoria`) VALUES
+(24, 1, 1, ''),
+(25, 1, 1, ''),
+(26, 1, 1, ''),
+(27, 1, 1, ''),
+(28, 1, 1, ''),
+(29, 1, 1, ''),
+(30, 1, 1, ''),
+(31, 1, 1, ''),
+(32, 1, 1, ''),
+(33, 1, 1, ''),
+(34, 1, 2, ''),
+(35, 1, 2, ''),
+(36, 1, 2, ''),
+(37, 1, 2, ''),
+(38, 1, 2, ''),
+(39, 1, 2, ''),
+(40, 1, 2, ''),
+(41, 1, 2, ''),
+(42, 1, 2, ''),
+(43, 1, 2, ''),
+(44, 1, 3, ''),
+(45, 1, 3, ''),
+(46, 1, 3, ''),
+(47, 1, 3, ''),
+(48, 1, 3, ''),
+(49, 1, 3, ''),
+(50, 1, 3, ''),
+(51, 1, 3, ''),
+(52, 1, 3, ''),
+(53, 1, 3, ''),
+(54, 2, 4, ''),
+(55, 2, 4, ''),
+(56, 2, 4, ''),
+(57, 2, 4, ''),
+(58, 2, 4, ''),
+(59, 2, 4, ''),
+(60, 2, 4, ''),
+(61, 2, 4, ''),
+(62, 2, 4, ''),
+(63, 2, 4, ''),
+(64, 2, 5, ''),
+(65, 2, 5, ''),
+(66, 2, 5, ''),
+(67, 2, 5, ''),
+(68, 2, 5, ''),
+(69, 2, 5, ''),
+(70, 2, 5, ''),
+(71, 2, 5, ''),
+(72, 2, 5, ''),
+(73, 2, 5, ''),
+(74, 3, 6, ''),
+(75, 3, 6, ''),
+(76, 3, 6, ''),
+(77, 3, 6, ''),
+(78, 3, 6, ''),
+(79, 3, 6, ''),
+(80, 3, 6, ''),
+(81, 3, 6, ''),
+(82, 3, 6, ''),
+(83, 3, 6, ''),
+(84, 3, 7, ''),
+(85, 3, 7, ''),
+(86, 3, 7, ''),
+(87, 3, 7, ''),
+(88, 3, 7, ''),
+(89, 3, 7, ''),
+(90, 3, 7, ''),
+(91, 3, 7, ''),
+(92, 3, 7, ''),
+(93, 3, 7, ''),
+(94, 4, 8, ''),
+(95, 4, 8, ''),
+(96, 4, 8, ''),
+(97, 4, 8, ''),
+(98, 4, 8, ''),
+(99, 4, 8, ''),
+(100, 4, 8, ''),
+(101, 4, 8, ''),
+(102, 4, 8, ''),
+(103, 4, 8, ''),
+(104, 4, 9, ''),
+(105, 4, 9, ''),
+(106, 4, 9, ''),
+(107, 4, 9, ''),
+(108, 4, 9, ''),
+(109, 4, 9, ''),
+(110, 4, 9, ''),
+(111, 4, 9, ''),
+(112, 4, 9, ''),
+(113, 4, 9, ''),
+(114, 4, 10, ''),
+(115, 4, 10, ''),
+(116, 4, 10, ''),
+(117, 4, 10, ''),
+(118, 4, 10, ''),
+(119, 4, 10, ''),
+(120, 4, 10, ''),
+(121, 4, 10, ''),
+(122, 4, 10, ''),
+(123, 4, 10, ''),
+(136, 1, 1, ''),
+(137, 1, 1, '12345678'),
+(138, 1, 1, '999999'),
+(139, 1, 1, '997788'),
+(140, 1, 1, '665577'),
+(142, 1, 1, '123456'),
+(143, 3, 2, '9995545'),
+(145, 1, 1, '11223344');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `permisos_web`
+-- Table structure for table `permisos_web`
 --
 
 CREATE TABLE `permisos_web` (
@@ -264,34 +324,49 @@ CREATE TABLE `permisos_web` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `permisos_web`
+-- Dumping data for table `permisos_web`
 --
 
 INSERT INTO `permisos_web` (`idRol`, `nombreWeb`, `permitido`) VALUES
+(1, 'citas.php', 1),
+(1, 'eliminarCita.php', 1),
 (1, 'enfermeros.php', 1),
+(1, 'fichaCita.php', 1),
 (1, 'fichaUsuario.php', 1),
+(1, 'formCitas.php', 1),
+(1, 'formEnfermero.php', 1),
 (1, 'formMedico.php', 1),
+(1, 'formPaciente.php', 1),
 (1, 'formUsuario.php', 1),
 (1, 'medicos.php', 1),
 (1, 'pacientes.php', 1),
 (1, 'usuarios.php', 1),
+(2, 'citas.php', 1),
 (2, 'enfermeros.php', 1),
 (2, 'fichaUsuario.php', 1),
 (2, 'medicos.php', 1),
 (2, 'pacientes.php', 1),
+(3, 'citas.php', 1),
+(3, 'eliminarCita.php', 1),
 (3, 'enfermeros.php', 1),
+(3, 'fichaCita.php', 1),
 (3, 'fichaUsuario.php', 1),
+(3, 'formCitas.php', 1),
 (3, 'medicos.php', 1),
 (3, 'pacientes.php', 1),
+(4, 'citas.php', 1),
+(4, 'eliminarCita.php', 1),
 (4, 'enfermeros.php', 1),
+(4, 'fichaCita.php', 1),
 (4, 'fichaUsuario.php', 1),
+(4, 'formCitas.php', 1),
 (4, 'medicos.php', 1),
 (4, 'pacientes.php', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -307,7 +382,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `nombre`, `tabla`, `tablaCupo`, `plantilla`, `plantillaForm`, `clase`, `indexWeb`, `menuWeb`) VALUES
@@ -319,7 +394,7 @@ INSERT INTO `roles` (`id`, `nombre`, `tabla`, `tablaCupo`, `plantilla`, `plantil
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -338,14 +413,14 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `idRol`, `nombre`, `apellidos`, `email`, `password`, `fechaNacimiento`, `direccion`, `cp`, `numIntentosLogin`, `ultimoAcceso`, `bloqueado`) VALUES
-(1, 1, 'Raquel', 'Marichal Fernández', 'administrador1@pruebas.com', '$2y$10$mIuCYitVKTHW9R1dwrTu6.VhYncrp2rjwsvS/5N20wGjrIRXtvjwu', '1976-11-11', 'Calle Puerta Canseco, 43', 38081, 0, '2020-11-01 16:00:00', 0),
+(1, 1, 'Raquel', 'Marichal Fernández', 'administrador1@pruebas.com', '$2y$10$mIuCYitVKTHW9R1dwrTu6.VhYncrp2rjwsvS/5N20wGjrIRXtvjwu', '1976-11-11', 'Calle Puerta Canseco, 43', 38081, 1, '2020-11-01 16:00:00', 0),
 (2, 1, 'Rita', 'Dorta Fernández', 'administrador2@pruebas.com', '$2y$10$956xtF8kkPVOWzz1VF.f.OzPYHSJa9PZXUMH4W8msY3ooR0huFKvC', '1976-06-22', 'Calle Porlier, 36', 38026, 0, '2020-11-01 16:00:00', 0),
 (3, 1, 'Pedro', 'Gil González', 'administrador3@pruebas.com', '$2y$10$7MHIUww6q9NfxNzBjZ7YFutbpE8.7.uUHQpEMBaLfR.bY2Fc4h.VW', '1978-09-25', 'Calle Porlier, 26', 38066, 0, '2020-11-01 16:00:00', 0),
-(4, 2, 'Juan', 'Díaz Pérez', 'medico1@pruebas.com', '$2y$10$mKONLBy2ONeGHdlx3x13z.egc3PcP0qFnhvPSs2DwB8eP.wahvp9y', '1983-09-23', 'Calle General Gutiérrez, 23', 38087, 0, '2020-11-01 16:00:00', 0),
+(4, 2, 'Juan', 'Díaz Pérez', 'medico1@pruebas.com', '$2y$10$mKONLBy2ONeGHdlx3x13z.egc3PcP0qFnhvPSs2DwB8eP.wahvp9y', '1983-09-23', 'Calle General Gutiérrez, 23', 38087, 1, '2020-11-01 16:00:00', 0),
 (5, 2, 'Rocío', 'Dorta Estévez', 'medico2@pruebas.com', '$2y$10$aPsdyLAG5TdijTd5ZRbdD.apuIu8452uBeR5w81q8QWcqGZqjlBi.', '1974-01-02', 'Calle San Antonio, 3', 38091, 0, '2020-11-01 16:00:00', 0),
 (6, 2, 'Rita', 'Gil Castillo', 'medico3@pruebas.com', '$2y$10$D0j00ZLrbUKQN7w.8.r4qOs6ux5sB34UEFJ60/5sPUmMKkL6bd.6m', '1975-12-16', 'Calle José Hernández Alfonso, 44', 38068, 0, '2020-11-01 16:00:00', 0),
 (7, 2, 'Teresa', 'Dorta Estévez', 'medico4@pruebas.com', '$2y$10$XQ0ThHtIGOnQ6t3AIuJIGeFq9lg7PmHf6LJ5yinHlFpuoAvCPjSaS', '1972-12-16', 'Calle Calvo Sotelo, 6', 38032, 0, '2020-11-01 16:00:00', 0),
@@ -363,7 +438,7 @@ INSERT INTO `usuarios` (`id`, `idRol`, `nombre`, `apellidos`, `email`, `password
 (19, 3, 'Rubén', 'Rodríguez Guanche', 'enfermero6@pruebas.com', '$2y$10$gZh5xLxbZAX8sxPQg26ELOUrQjAafq2KvEgAp9Jv07F40u27krURi', '1977-10-28', 'Calle José Hernández Alfonso, 7', 38024, 0, '2020-11-01 16:00:00', 0),
 (20, 3, 'Andrés', 'Soto Brito', 'enfermero7@pruebas.com', '$2y$10$GXi/CSpnYQmBdAr6uGiv2upKvfSPY68hTPcZwC32ibaUt3Sq5nF7S', '1989-09-25', 'Calle Costa y Grijalba, 8', 38073, 0, '2020-11-01 16:00:00', 0),
 (21, 3, 'Rubén', 'Rodríguez Fernández', 'enfermero8@pruebas.com', '$2y$10$97JNflrhAIzln6ITGi7/nODQdzhd1Tor0R.xtm2lKNCcj1wIoojjy', '1971-08-09', 'Calle San Antonio, 14', 38040, 0, '2020-11-01 16:00:00', 0),
-(22, 3, 'Pedro', 'Dorta Molina', 'enfermero9@pruebas.com', '$2y$10$KMuvN52e/h377EX3qKoF/esqPzPGtQZKmbcid0ffqQ98U4.MK4i9K', '1984-12-09', 'Calle San Antonio, 18', 38066, 0, '2020-11-01 16:00:00', 0),
+(22, 3, 'Pedro', 'PEREZ PEREZ', 'enfermero9@pruebas.com', '$2y$10$KMuvN52e/h377EX3qKoF/esqPzPGtQZKmbcid0ffqQ98U4.MK4i9K', '1984-12-09', 'Calle San Antonio, 18', 38066, 0, '2020-11-01 16:00:00', 0),
 (23, 3, 'Marcos', 'Ravelo Estévez', 'enfermero10@pruebas.com', '$2y$10$7l6AQaCPci3Ge/rWWYZDxOiN4oI.19cvkNvBxsHfSMjOjEZua0QC.', '1985-04-14', 'Calle Porlier, 27', 38002, 0, '2020-11-01 16:00:00', 0),
 (24, 4, 'Rubén', 'Dorta Castillo', 'paciente1@pruebas.com', '$2y$10$Cu7/9BJp3GMW2C0Vw9unqOpLxtjB8337mbNoWi9T2YMG0pL6HRH6C', '1979-06-02', 'Calle Castro, 4', 38079, 0, '2020-11-01 16:00:00', 0),
 (25, 4, 'Raquel', 'Hernández Mesa', 'paciente2@pruebas.com', '$2y$10$cxtyEg9LfZHCSsKX7jFBwepiNSPMnfjASwfsezNjE1AGxx8ehwage', '1975-09-01', 'Calle General Gutiérrez, 4', 38065, 0, '2020-11-01 16:00:00', 0),
@@ -465,90 +540,128 @@ INSERT INTO `usuarios` (`id`, `idRol`, `nombre`, `apellidos`, `email`, `password
 (121, 4, 'Rocío', 'Gil Pérez', 'paciente98@pruebas.com', '$2y$10$lZph4lL8Ixq9plGS/2rMGuXId0WmgsENrLU6Cf9Dz0AR71xNPcqp.', '1987-05-27', 'Calle Méndez Núñez, 47', 38052, 0, '2020-11-01 16:00:00', 0),
 (122, 4, 'Rita', 'Cruz Pérez', 'paciente99@pruebas.com', '$2y$10$CJgv4l6.ss1cHQEary9I4ecpe6t6GUUSpyICoKY5ubxtsqg0i5Viu', '1987-04-01', 'Calle San Antonio, 12', 38054, 0, '2020-11-01 16:00:00', 0),
 (123, 4, 'Raquel', 'Díaz Fernández', 'paciente100@pruebas.com', '$2y$10$SRuV5aTpstbARvScSHQ.p.wX/VG9sh7.vcaVDoNTgZBNh4GRL.H5W', '1961-02-28', 'Calle Méndez Núñez, 7', 38066, 0, '2020-11-01 16:00:00', 0),
-(131, 2, 'Francisco Javier', 'Melchior', 'jmelchior@pruebas.com', '$2y$10$p7spd9wEi3L/3DSAHIMX8uTKP2mBMQI9oUwrQjnUUi063umg5dWQ6', '1985-11-14', 'Probando', 123654, 0, '2020-11-12 17:29:49', 0);
+(131, 2, 'Francisco Javier', 'Melchior', 'jmelchior@pruebas.com', '$2y$10$p7spd9wEi3L/3DSAHIMX8uTKP2mBMQI9oUwrQjnUUi063umg5dWQ6', '1985-11-14', 'Probando', 123654, 0, '2020-11-12 17:29:49', 0),
+(132, 2, 'PEPE', 'PEPE', 'pepe@pruebas.com', '$2y$10$8va6WiebLVEL7MOLFZ8pXuPhhxfej5wd59T5NTW4NpbysXMXiv9z6', '1980-01-01', 'calle cañamo', 38107, 0, '2020-11-21 12:35:31', 0),
+(133, 2, 'Jose', 'Espinel', 'medico@pruebas.com', '$2y$10$XsDRwvkaNcBM00LKemI.7uxnW7dz/neL5R61TxDeyCVgOoDbmHEAi', '1980-01-05', 'calle bla bla', 38108, 0, '2020-11-25 21:02:02', 0),
+(134, 4, 'pepito', 'rodriguez', 'rodri@pruebas.com', '$2y$10$yM3Yuu9qEj62AMNwJuzyDeXQFHwvdaIijIzU6j3Y/KSDBCmPFePay', '1995-01-05', 'calle pepe', 38107, 0, '2020-11-25 21:05:24', 0),
+(136, 4, 'Juan', 'Gomez', 'ebere@gmail.com', '$2y$10$BrppaXdrJth3db3R.IW.L.WBzD80Ej.o5nXMJ8qsayAbFbCV/6btq', '1980-01-02', 'calle', 3545, 0, '2020-11-25 21:15:06', 0),
+(137, 4, 'Adrian', 'Balboa', 'balbi@gmai.com', '$2y$10$crIJ.on/c8bzjZyItAKCpOqbL3Qvp89Kr9FH.xUaKDrE4mWuaTLGS', '1990-01-02', 'calle', 0, 0, '2020-11-25 21:17:25', 0),
+(138, 4, 'Jose', 'Espinel', 'jose@gmail.com', '$2y$10$86AbAyFZvMB4ZfRhLCTyvuv4Q/oi1HeZ1LVyoVw58J8WS5N1M2sFO', '1995-01-01', 'calle', 0, 0, '2020-11-25 21:23:39', 0),
+(139, 4, 'maria', 'db', 'db@gmail.com', '$2y$10$YGuOU/RxS3a8KxihQRJnce6jgNGJii69Sx/WTTipK5VS8VFxLc0zO', '1988-05-09', 'cp', 123456, 0, '2020-11-25 21:27:37', 0),
+(140, 4, 'Carmen', 'Espinel', 'carmen@gmail.com', '$2y$10$5iWT0vcqJDwUkfyHIPY0w.sLjv4GJOQjCbndYQLN3kGAapuHQE0tq', '1980-05-05', 'calle carmen', 354524, 0, '2020-11-25 21:37:06', 0),
+(141, 2, 'Alberto', 'Joraba', 'albert@gmail.com', '$2y$10$5CeobaeGLsQOGeHxCc9Ls.XfrpVyaLTFHzhlNxMtZL4a9a61FUzwC', '2000-01-05', 'calle flu', 38105, 0, '2020-12-01 22:40:03', 0),
+(142, 4, 'paciente1', 'paciente', 'paciente1@probando.com', '$2y$10$imL.267ZRPhSm2DiC.E2pO5.dYvhRSEGNh9BzWrg26.wlCRBoi4he', '1990-01-05', 'calle paciente', 38108, 0, '2020-12-05 13:03:19', 0),
+(143, 4, 'Jose', 'Espinel', 'jose1@pruebas.com', '$2y$10$fM38drJJzWaZWkkcjXeA2e5v25h2eK5zPRb8Lk.8/WjbMIrwBesHu', '1990-01-01', 'Calle direccion', 38108, 0, '2020-12-06 13:20:34', 0),
+(144, 4, 'ALbert', 'Albert', 'albert@pruebas.com', 'Probando', '2020-12-01', 'calle bla', 38108, 0, '0000-00-00 00:00:00', 0),
+(145, 4, 'alberto', 'alberto', 'alberto@gmail.com', '$2y$10$cU3juuwVBhb1lI302k0an.6eKH3AtPwrhmy0zBdkQxrYE/RESYyrO', '1990-01-01', 'calle', 38108, 0, '2020-12-06 13:51:40', 0),
+(146, 2, 'ewterwterw', 'ewrterwtewtewterwterwt', '', '$2y$10$IxlozPolY0ZZjIvknB5pDefHk/Djq/Zudo8y8DcweZm904OQAxOaW', '0000-00-00', '', 0, 0, '2020-12-06 19:48:25', 0);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `centros_salud`
+-- Indexes for table `centros_salud`
 --
 ALTER TABLE `centros_salud`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `cupos`
+-- Indexes for table `citas`
+--
+ALTER TABLE `citas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cupos`
 --
 ALTER TABLE `cupos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `enfermeros`
+-- Indexes for table `enfermeros`
 --
 ALTER TABLE `enfermeros`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `numColegiado` (`numColegiado`);
 
 --
--- Indices de la tabla `medicos`
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `medicos`
 --
 ALTER TABLE `medicos`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `numColegiado` (`numColegiado`);
 
 --
--- Indices de la tabla `pacientes`
+-- Indexes for table `pacientes`
 --
 ALTER TABLE `pacientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `permisos_web`
+-- Indexes for table `permisos_web`
 --
 ALTER TABLE `permisos_web`
   ADD PRIMARY KEY (`idRol`,`nombreWeb`);
 
 --
--- Indices de la tabla `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `centros_salud`
+-- AUTO_INCREMENT for table `centros_salud`
 --
 ALTER TABLE `centros_salud`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `cupos`
+-- AUTO_INCREMENT for table `citas`
+--
+ALTER TABLE `citas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+
+--
+-- AUTO_INCREMENT for table `cupos`
 --
 ALTER TABLE `cupos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `roles`
+-- AUTO_INCREMENT for table `log`
 --
-ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

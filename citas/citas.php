@@ -107,6 +107,9 @@ if (!$permisosWeb->permitido) {
         }
     }
 
+/************QUITAR VER CITA**********************/
+
+
     function operateFormatter(value, row, index) {
         return [
             '<div class="text-center">',

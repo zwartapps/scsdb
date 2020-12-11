@@ -3,7 +3,7 @@ require_once __DIR__ . '/../db/class.GestorDB.php';
 require_once __DIR__ . '/class.Rol.php';
 
 class Medico extends Usuario
-{
+{   
     protected $id;
     protected $numColegiado;
     protected $idCentroSalud = "";
@@ -36,6 +36,12 @@ class Medico extends Usuario
         return $this->idCentroSalud;
     }
     
+
+    public function getEnfermero(){
+
+    }
+
+/*
     public function getEnfermero() {
         $cupoMedico = $this->idCupo;
         $enfermero = new Enfermero();
@@ -46,7 +52,9 @@ class Medico extends Usuario
         }
         return $idEnfermero;
     }
-    
+  */
+  
+  
     public function esMiPaciente($idPaciente) {
         $paciente = new Paciente($idPaciente);        
         if($this->idCupo == $paciente->idCupo){
@@ -58,6 +66,7 @@ class Medico extends Usuario
     public function guardar()
     {
         $gestorDB = new GestorDB();
+        $error = new Log();
         
         if ($this->id != 0) {
             // Hay que hacer un UPDATE
@@ -94,11 +103,15 @@ class Medico extends Usuario
                 return false;
             }
             
+            ////////*TODOOOOOOOOOOOOOOOOOOOOO*******//////////////
+            //////////ERROR LOGSSSSSSS///////////////
+
             // Actualizamos la tabla de Médicos
             $resultadoMedico = $gestorDB->updateDB(TABLA_MEDICOS, $datosMedico, $clavesPrimarias);
             if ($resultadoMedico instanceof PDOException) {
                 // Ha ocurrido un error
-                // Hay que insertar en el log
+                // Hay que insertar en el log               
+                $error->guardar($resultadoMedico);
                 return false;
             }
             
@@ -124,6 +137,7 @@ class Medico extends Usuario
             $resultadoUsuario = $gestorDB->insertIntoDB(TABLA_USUARIOS, $datosUsuario, ['id']);
             if ($resultadoUsuario instanceof PDOException) {
                 // Ha ocurrido un error
+
                 // Hay que insertar en el log
                 echo $resultadoUsuario->getMessage();
                 return false;

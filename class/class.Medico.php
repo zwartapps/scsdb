@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../db/class.GestorDB.php';
 require_once __DIR__ . '/class.Rol.php';
+require_once __DIR__ . '/class.Log.php';
 
 class Medico extends Usuario
 {   
@@ -66,7 +67,7 @@ class Medico extends Usuario
     public function guardar()
     {
         $gestorDB = new GestorDB();
-        $error = new Log();
+       $error = new Log();
         
         if ($this->id != 0) {
             // Hay que hacer un UPDATE

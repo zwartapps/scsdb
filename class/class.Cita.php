@@ -36,7 +36,8 @@ class Cita {
             return $this->$atributo;
         }
         return false;
-    }
+    }    
+
     
     public function guardar() {
         $gestorDB = new GestorDB();       
@@ -94,6 +95,7 @@ class Cita {
     public function getAtributos() {
         return get_object_vars($this);
     }    
+    
 }
 
 // Devuelve un array en PHP con los datos de todos las citas
@@ -101,5 +103,8 @@ function cargarCitas ($tipoFetch = 'FETCH_ASSOC') {
     $gestorDB = new GestorDB();
     $registros = $gestorDB->getRecordsByParams(TABLA_CITAS, ['*'], NULL, NULL, $tipoFetch);
     
-    return $registros;       
+    return $registros;    
+    
+    
+    
 }

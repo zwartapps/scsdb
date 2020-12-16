@@ -22,7 +22,7 @@ if (!$permisosWeb->permitido) {
 }
 
 if (isset($_GET['borrar'])) {
-    $citaBorrar = new Cita($_GET['id']);
+    $citaBorrar = new Cita($_GET['idCita']);
     $citaBorrar->eliminar();
     header('Location: citas.php');
 }

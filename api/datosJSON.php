@@ -282,56 +282,57 @@ switch ($tarea) {
 
         echo json_encode($resultado);
         break;
-    
+
     case 'getCitas':
-        /*
-            //admin puede ver todas las citas
-            if($usuario->id==1){          
-                $clausulaWhere = null;
-            }
-            else {
-                //Mostramos solamente las citas del paciente logeado
-                $clausulaWhere = TABLA_CITAS.".idPaciente = ".$usuario->id;    
-            }
-            $conexionDB = new GestorDB();
-            $parametrosSelect = ['id','fechaHora','idPaciente','tipo'];
-            $datos = $conexionDB->getRecordsByParams(TABLA_CITAS, $parametrosSelect, $clausulaWhere, 'fechaHora ASC, tipo','FETCH_ASSOC', $limit, $offset);        
-            echo json_encode($datos);        
-            */
+
         switch ($usuario->idRol) {
             case 1:
                 // Administrador -> Puede acceder a cualquier conjunto de datos
-                
-                $consultaSql = "SELECT " .TABLA_CITAS. ".fechaHora AS fechaHora, " .TABLA_CITAS. ".id AS idCita, " .TABLA_CITAS. ".tipo AS tipoCita, ";
-                $consultaSql .= " " .TABLA_USUARIOS. ".nombre AS nombre, " .TABLA_USUARIOS. ".apellidos AS apellidos ";
-                $consultaSql .= " FROM " .TABLA_CITAS. " , " .TABLA_USUARIOS. " ";
-                $consultaSql .= " WHERE " .TABLA_CITAS. ".idPaciente = " .TABLA_USUARIOS. ".id";
+
+                $consultaSql = "SELECT " . TABLA_CITAS . ".fechaHora AS fechaHora, " . TABLA_CITAS . ".id AS idCita, " . TABLA_CITAS . ".tipo AS tipoCita, ";
+                $consultaSql .= " " . TABLA_USUARIOS . ".nombre AS nombre, " . TABLA_USUARIOS . ".apellidos AS apellidos ";
+                $consultaSql .= " FROM " . TABLA_CITAS . " , " . TABLA_USUARIOS . " ";
+                $consultaSql .= " WHERE " . TABLA_CITAS . ".idPaciente = " . TABLA_USUARIOS . ".id";
                 break;
 
             case 2:
                 // es un medico puede ver las citas de su cupo
                 $medico = new Medico($usuario->id);
 
-                $consultaSql = " SELECT " .TABLA_CITAS.".fechaHora as fechaHora, ".TABLA_CITAS.".id AS idCita, ".TABLA_CITAS.".tipo AS tipoCita, ";
-                $consultaSql .= " ".TABLA_USUARIOS. ".nombre AS nombre, ".TABLA_USUARIOS.".apellidos AS apellidos ";
-                $consultaSql .= " FROM ".TABLA_CITAS.", ".TABLA_USUARIOS.".apellidos AS apellidos ";
-                $consultaSql .= " WHERE " .TABLA_CITAS. ".idPaciente = ".TABLA_USUARIOS.".id";
-                $consultaSql .= " AND " .TABLA_CITAS. ".idPaciente = " .TABLA_PACIENTES.".id";
-                $consultaSql .= " AND " .TABLA_PACIENTES. "idCupo = ".$medico->idCupo;
+                $consultaSql = "SELECT " . TABLA_CITAS . ".fechaHora AS fechaHora, " . TABLA_CITAS . ".id AS idCita, " . TABLA_CITAS . ".tipo AS tipoCita, ";
+                $consultaSql .= " " . TABLA_USUARIOS . ".nombre AS nombre, " . TABLA_USUARIOS . ".apellidos AS apellidos ";
+                $consultaSql .= " FROM " . TABLA_CITAS . " , " . TABLA_USUARIOS . " , " .TABLA_PACIENTES. " ";
+                $consultaSql .= " WHERE " . TABLA_CITAS . ".idPaciente = " . TABLA_USUARIOS . ".id";
+                $consultaSql .= " AND " . TABLA_CITAS . ".idPaciente = " . TABLA_PACIENTES . ".id";
+                $consultaSql .= " AND " . TABLA_PACIENTES . ".idCupo = " . $medico->idCupo;
                 break;
 
             case 3:
                 //enfermero puede ver las citas de su cupo que sean de enfermeria
+                $enfermero = new Enfermero($usuario->id);
+                
+                $consultaSql = "SELECT " . TABLA_CITAS . ".fechaHora AS fechaHora, " . TABLA_CITAS . ".id AS idCita, " . TABLA_CITAS . ".tipo AS tipoCita, ";
+                $consultaSql .= " " . TABLA_USUARIOS . ".nombre AS nombre, " . TABLA_USUARIOS . ".apellidos AS apellidos ";
+                $consultaSql .= " FROM " . TABLA_CITAS . " , " . TABLA_USUARIOS . " , " .TABLA_PACIENTES. " ";
+                $consultaSql .= " WHERE " . TABLA_CITAS . ".idPaciente = " . TABLA_USUARIOS . ".id";
+                $consultaSql .= " AND " . TABLA_CITAS . ".idPaciente = " . TABLA_PACIENTES . ".id";    
+                $consultaSql .= " AND " . TABLA_CITAS . ".tipo = 'ENFERMERIA' ";           
+                $consultaSql .= " AND " . TABLA_PACIENTES . ".idCupo = " . $enfermero->idCupo;         
                 break;
 
-
             case 4:
-
                 //paciente solamente su propias citas
+                $paciente = new Paciente($usuario->id);
+
+                $consultaSql = "SELECT " . TABLA_CITAS . ".fechaHora AS fechaHora, " . TABLA_CITAS . ".id AS idCita, " . TABLA_CITAS . ".tipo AS tipoCita, ";
+                $consultaSql .= " " . TABLA_USUARIOS . ".nombre AS nombre, " . TABLA_USUARIOS . ".apellidos AS apellidos ";
+                $consultaSql .= " FROM " . TABLA_CITAS . " , " . TABLA_USUARIOS . " , " .TABLA_PACIENTES. " ";
+                $consultaSql .= " WHERE " . TABLA_CITAS . ".idPaciente = " . TABLA_USUARIOS . ".id";
+                $consultaSql .= " AND " . TABLA_CITAS . ".idPaciente = " . TABLA_PACIENTES . ".id";    
+                $consultaSql .= " AND " . TABLA_CITAS . ".idPaciente = " .$paciente->id;       
                 break;
         }
 
-      
         $conexionDB = new GestorDB();
 
         try {
@@ -341,14 +342,11 @@ switch ($tarea) {
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-      
-       $resultado = array();
-       // $resultado['total'] = $totalDatos;
+
+        $resultado = array();      
         $resultado['rows'] = $datos;
 
         echo json_encode($resultado);
 
         break;
 }
-
-?>

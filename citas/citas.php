@@ -92,16 +92,15 @@ if (!$permisosWeb->permitido) {
 </footer>
 </body>
 
-<!--TOODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
 <script>
     window.operateEvents = {  
         'click .modificarCita': function (e, value, row, index) {
             //Modificar Cita en DB
-            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+index;
+            window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/formCitas.php?id="+row.idCita;
         },
 		'click .borrarCita': function (e, value, row, index) {
             //Borrar Cita en DB                    
-          window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/eliminarCita.php?id="+row.id;
+          window.location.href = "<?php echo $GLOBALES['rutaPrincipal'] ;?>/citas/eliminarCita.php?id="+row.idCita;
         }
     }
 

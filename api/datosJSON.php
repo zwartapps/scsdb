@@ -341,6 +341,11 @@ switch ($tarea) {
             $datos = $consultaSqlDB->fetchAll(constant('PDO::FETCH_ASSOC'));
         } catch (PDOException $e) {
             echo $e->getMessage();
+
+            $log = new Log();
+            $log->observaciones = $e->getMessage();
+            $log->guardar();
+
         }
 
         $resultado = array();      

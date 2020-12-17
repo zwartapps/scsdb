@@ -38,11 +38,6 @@ class Medico extends Usuario
     }
     
 
-    public function getEnfermero(){
-
-    }
-
-/*
     public function getEnfermero() {
         $cupoMedico = $this->idCupo;
         $enfermero = new Enfermero();
@@ -53,8 +48,7 @@ class Medico extends Usuario
         }
         return $idEnfermero;
     }
-  */
-  
+
   
     public function esMiPaciente($idPaciente) {
         $paciente = new Paciente($idPaciente);        
@@ -67,8 +61,7 @@ class Medico extends Usuario
     public function guardar()
     {
         $gestorDB = new GestorDB();
-       $error = new Log();
-        
+             
         if ($this->id != 0) {
             // Hay que hacer un UPDATE
             // Variables para la tabla USUARIOS
@@ -101,18 +94,20 @@ class Medico extends Usuario
             if ($resultadoUsuario instanceof PDOException) {
                 // Ha ocurrido un error
                 // Hay que insertar en el log
+                $error = new Log();
+                $error->observaciones = "ERROR";
+                print_r($error);
+                $error->guardar();
                 return false;
-            }
-            
-            ////////*TODOOOOOOOOOOOOOOOOOOOOO*******//////////////
-            //////////ERROR LOGSSSSSSS///////////////
+            }   
+ 
 
             // Actualizamos la tabla de Médicos
             $resultadoMedico = $gestorDB->updateDB(TABLA_MEDICOS, $datosMedico, $clavesPrimarias);
             if ($resultadoMedico instanceof PDOException) {
                 // Ha ocurrido un error
                 // Hay que insertar en el log               
-                $error->guardar($resultadoMedico);
+            
                 return false;
             }
             
@@ -138,9 +133,14 @@ class Medico extends Usuario
             $resultadoUsuario = $gestorDB->insertIntoDB(TABLA_USUARIOS, $datosUsuario, ['id']);
             if ($resultadoUsuario instanceof PDOException) {
                 // Ha ocurrido un error
-
                 // Hay que insertar en el log
-                echo $resultadoUsuario->getMessage();
+              //  echo $resultadoUsuario->getMessage();
+
+            
+            $error->observaciones = "ERROR";
+            $error->guardar();
+
+
                 return false;
             } else {
                 $this->id = $resultadoUsuario;

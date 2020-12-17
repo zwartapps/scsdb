@@ -107,7 +107,15 @@ class Medico extends Usuario
             if ($resultadoMedico instanceof PDOException) {
                 // Ha ocurrido un error
                 // Hay que insertar en el log               
-            
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoMedico->getMessage();
+                $error->ip = "REMOTE_ADDR";
+                $error->fecha = date('d-m-Y H:i:s');
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             }
             
@@ -135,10 +143,7 @@ class Medico extends Usuario
                 // Ha ocurrido un error
                 // Hay que insertar en el log
               //  echo $resultadoUsuario->getMessage();
-
-            
-            $error->observaciones = "ERROR";
-            $error->guardar();
+                  
 
 
                 return false;

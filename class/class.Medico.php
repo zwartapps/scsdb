@@ -111,7 +111,7 @@ class Medico extends Usuario
                 $error->idUsuario = $this->id;
                 $error->observaciones = $resultadoMedico->getMessage();
                 $error->ip = "REMOTE_ADDR";
-                $error->fecha = date('d-m-Y H:i:s');
+                $error->fecha = date('d-m-Y H:i:s'); //ADD TIMESTAMP
                 $error->navegador = get_browser();
                 $error->navegador = $_SERVER['HTTP_USER_AGENT'];
                 $error->sistemaOperativo = PHP_OS;

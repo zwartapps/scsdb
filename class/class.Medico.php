@@ -29,15 +29,17 @@ class Medico extends Usuario
         }
     }
     
+    //Obtener el Cupo
     public function getCupo() {
         return $this->idCupo;
     }
     
+    //Obtener el Centro Sanitario
     public function getCentroSanitario() {
         return $this->idCentroSalud;
     }
     
-
+    //Obtener el enfermero
     public function getEnfermero() {
         $cupoMedico = $this->idCupo;
         $enfermero = new Enfermero();
@@ -49,7 +51,7 @@ class Medico extends Usuario
         return $idEnfermero;
     }
 
-  
+    //ver si es mi paciente
     public function esMiPaciente($idPaciente) {
         $paciente = new Paciente($idPaciente);        
         if($this->idCupo == $paciente->idCupo){

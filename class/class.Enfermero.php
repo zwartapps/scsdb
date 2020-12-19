@@ -25,13 +25,27 @@ class Enfermero extends Usuario {
             }
         }
     }
+
+    //devuelve el Cupo
     public function getCupo() {
        return $this->idCupo;
     }
 
+    //devuelve el id
     public function getId(){
         return $this->id;
     }
+
+
+    //ver si es mi paciente
+    public function esMiPaciente($idPaciente) {
+        $paciente = new Paciente($idPaciente);        
+        if($this->idCupo == $paciente->idCupo){
+            return true;
+        }  
+        return false; 
+    }    
+
 
     public function guardar() {
         $gestorDB = new GestorDB();

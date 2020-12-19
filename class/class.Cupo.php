@@ -44,8 +44,7 @@ function cargarCupos($tipoFetch = 'FETCH_ASSOC',$idCentroSalud = 0) {
 		$registros = $gestorDB->getRecordsByParams(TABLA_CUPOS, ['*'], 'idCentroSalud = '.$idCentroSalud, NULL, $tipoFetch);
 	} else {
 		$registros = $gestorDB->getRecordsByParams(TABLA_CUPOS, ['*'], NULL, NULL, $tipoFetch);
-	}		
-	
+	}	
 	return $registros;
 }
 

@@ -2,7 +2,6 @@
 
 require_once __DIR__.'/../db/class.GestorDB.php';
 
-
 class Log {
     protected $id;
     protected $idUsuario;
@@ -12,11 +11,9 @@ class Log {
     protected $navegador = "";
     protected $sistemaOperativo = "";
 
-
     public function __construct($id = 0) {
 
-        if ($id != 0) {
-           
+        if ($id != 0) {           
             $gestorDB = new GestorDB();
             $datosRequeridos = ['*'];
             $clausulaWhere = 'id = '.$id;

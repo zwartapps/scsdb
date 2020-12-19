@@ -63,16 +63,32 @@ class Paciente extends Usuario
             // Actualizamos la tabla de Usuarios
             $resultadoUsuario = $gestorDB->updateDB(TABLA_USUARIOS, $datosUsuario, $clavesPrimarias);
             if ($resultadoUsuario instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoUsuario->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             }
             
             // Actualizamos la tabla de Pacientes
             $resultadoUsuario = $gestorDB->updateDB(TABLA_PACIENTES, $datosPaciente, $clavesPrimarias);
             if ($resultadoUsuario instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoUsuario->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             }
             
@@ -97,9 +113,16 @@ class Paciente extends Usuario
             // Insertamos al usuario en la tabla de Usuarios
             $resultadoUsuario = $gestorDB->insertIntoDB(TABLA_USUARIOS, $datosUsuario, ['id']);
             if ($resultadoUsuario instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
-                echo $resultadoUsuario->getMessage();
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoUsuario->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             } else {
                 $this->id = $resultadoUsuario;
@@ -115,9 +138,17 @@ class Paciente extends Usuario
             // Insertamos al médico en la tabla de pacientes
             $datosPaciente = $gestorDB->insertIntoDB(TABLA_PACIENTES, $datosPaciente, []);
             if ($datosPaciente instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
-                echo $datosPaciente->getMessage();
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $datosPaciente->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
+                return false;
                 return false;
             }
             

@@ -92,11 +92,15 @@ class Medico extends Usuario
             // Actualizamos la tabla de Usuarios
             $resultadoUsuario = $gestorDB->updateDB(TABLA_USUARIOS, $datosUsuario, $clavesPrimarias);
             if ($resultadoUsuario instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
-                $error = new Log();
-                $error->observaciones = "ERROR";
-                print_r($error);
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoUsuario->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
                 $error->guardar();
                 return false;
             }   
@@ -105,13 +109,12 @@ class Medico extends Usuario
             // Actualizamos la tabla de Médicos
             $resultadoMedico = $gestorDB->updateDB(TABLA_MEDICOS, $datosMedico, $clavesPrimarias);
             if ($resultadoMedico instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log               
+                // Ha ocurrido un error    
                 $error= new Log();
                 $error->idUsuario = $this->id;
                 $error->observaciones = $resultadoMedico->getMessage();
-                $error->ip = "REMOTE_ADDR";
-                $error->fecha = date('d-m-Y H:i:s'); //ADD TIMESTAMP
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
                 $error->navegador = get_browser();
                 $error->navegador = $_SERVER['HTTP_USER_AGENT'];
                 $error->sistemaOperativo = PHP_OS;
@@ -140,12 +143,16 @@ class Medico extends Usuario
             // Insertamos al usuario en la tabla de Usuarios
             $resultadoUsuario = $gestorDB->insertIntoDB(TABLA_USUARIOS, $datosUsuario, ['id']);
             if ($resultadoUsuario instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
-              //  echo $resultadoUsuario->getMessage();
-                  
-
-
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoUsuario->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             } else {
                 $this->id = $resultadoUsuario;
@@ -162,8 +169,17 @@ class Medico extends Usuario
             // Insertamos al médico en la tabla de médicos
             $resultadoMedico = $gestorDB->insertIntoDB(TABLA_MEDICOS, $datosMedico, []);
             if ($resultadoMedico instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoMedico->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
+                return false;
                 
                 print_r( $resultadoMedico->getMessage());
                 $error = new Log();

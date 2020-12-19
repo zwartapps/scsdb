@@ -78,8 +78,16 @@ class Usuario {
             $clavesPrimarias = array('id' => $this->id);
             $resultado = $gestorDB->updateDB(TABLA_USUARIOS,get_object_vars($this),$clavesPrimarias);
             if ($resultado instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultado->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             } else {
                 return true;
@@ -88,8 +96,16 @@ class Usuario {
             // Hay que hacer un INSERT
             $resultado = $gestorDB->insertIntoDB(TABLA_USUARIOS,get_object_vars($this),['id']);
             if ($resultado instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultado->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             } else {
                 $this->id = $resultado;

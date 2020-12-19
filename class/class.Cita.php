@@ -57,8 +57,17 @@ class Cita {
             // Actualizamos la tabla de Citas
             $resultadoCita = $gestorDB->updateDB(TABLA_CITAS, $datosCita, $clavesPrimarias);
             if ($resultadoCita instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoCita->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
+                return false;
                 return false;
             } 
             
@@ -75,9 +84,16 @@ class Cita {
             // Insertamos la cita en la tabla de Citas
             $resultadoCita = $gestorDB->insertIntoDB(TABLA_CITAS, $datosCita, ['id']);
             if ($resultadoCita instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
-                echo $resultadoCita->getMessage();
+                // Ha ocurrido un error    
+                $error= new Log();
+                $error->idUsuario = $this->id;
+                $error->observaciones = $resultadoCita->getMessage();
+                $error->ip = $_SERVER['REMOTE_ADDR'];
+                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->navegador = get_browser();
+                $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+                $error->sistemaOperativo = PHP_OS;
+                $error->guardar();
                 return false;
             } else {
                 $this->id = $resultadoCita;
@@ -95,16 +111,11 @@ class Cita {
     public function getAtributos() {
         return get_object_vars($this);
     }    
-    
 }
 
 // Devuelve un array en PHP con los datos de todos las citas
 function cargarCitas ($tipoFetch = 'FETCH_ASSOC') {
     $gestorDB = new GestorDB();
-    $registros = $gestorDB->getRecordsByParams(TABLA_CITAS, ['*'], NULL, NULL, $tipoFetch);
-    
+    $registros = $gestorDB->getRecordsByParams(TABLA_CITAS, ['*'], NULL, NULL, $tipoFetch);    
     return $registros;    
-    
-    
-    
 }

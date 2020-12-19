@@ -30,14 +30,11 @@ class Log {
         $gestorDB = new GestorDB();
         $resultado = $gestorDB->insertIntoDB(TABLA_LOG,get_object_vars($this),['id']);
             if ($resultado instanceof PDOException) {
-                // Ha ocurrido un error
-                // Hay que insertar en el log
                 return false;
             } else {
                 $this->id = $resultado;
                 return true;
-            }
-      
+            }      
     }
 
     public function __set($atributo, $valor) {

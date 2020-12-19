@@ -68,7 +68,7 @@ class Paciente extends Usuario
                 $error->idUsuario = $this->id;
                 $error->observaciones = $resultadoUsuario->getMessage();
                 $error->ip = $_SERVER['REMOTE_ADDR'];
-                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->fechaHora = date('Y-m-d H:i:s'); 
                 $error->navegador = get_browser();
                 $error->navegador = $_SERVER['HTTP_USER_AGENT'];
                 $error->sistemaOperativo = PHP_OS;
@@ -84,7 +84,7 @@ class Paciente extends Usuario
                 $error->idUsuario = $this->id;
                 $error->observaciones = $resultadoUsuario->getMessage();
                 $error->ip = $_SERVER['REMOTE_ADDR'];
-                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->fechaHora = date('Y-m-d H:i:s'); 
                 $error->navegador = get_browser();
                 $error->navegador = $_SERVER['HTTP_USER_AGENT'];
                 $error->sistemaOperativo = PHP_OS;
@@ -118,7 +118,7 @@ class Paciente extends Usuario
                 $error->idUsuario = $this->id;
                 $error->observaciones = $resultadoUsuario->getMessage();
                 $error->ip = $_SERVER['REMOTE_ADDR'];
-                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->fechaHora = date('Y-m-d H:i:s'); 
                 $error->navegador = get_browser();
                 $error->navegador = $_SERVER['HTTP_USER_AGENT'];
                 $error->sistemaOperativo = PHP_OS;
@@ -143,15 +143,14 @@ class Paciente extends Usuario
                 $error->idUsuario = $this->id;
                 $error->observaciones = $datosPaciente->getMessage();
                 $error->ip = $_SERVER['REMOTE_ADDR'];
-                $error->fechaHora = date('Y-m-d H:i:s'); //ADD TIMESTAMP
+                $error->fechaHora = date('Y-m-d H:i:s');
                 $error->navegador = get_browser();
                 $error->navegador = $_SERVER['HTTP_USER_AGENT'];
                 $error->sistemaOperativo = PHP_OS;
                 $error->guardar();
                 return false;
                 return false;
-            }
-            
+            }            
             return true;
         }
     }

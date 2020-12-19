@@ -288,7 +288,6 @@ switch ($tarea) {
         switch ($usuario->idRol) {
             case 1:
                 // Administrador -> Puede acceder a cualquier conjunto de datos
-
                 $consultaSql = "SELECT " . TABLA_CITAS . ".fechaHora AS fechaHora, " . TABLA_CITAS . ".id AS idCita, " . TABLA_CITAS . ".tipo AS tipoCita, ";
                 $consultaSql .= " " . TABLA_USUARIOS . ".nombre AS nombre, " . TABLA_USUARIOS . ".apellidos AS apellidos ";
                 $consultaSql .= " FROM " . TABLA_CITAS . " , " . TABLA_USUARIOS . " ";
@@ -340,18 +339,20 @@ switch ($tarea) {
             $consultaSqlDB->execute();
             $datos = $consultaSqlDB->fetchAll(constant('PDO::FETCH_ASSOC'));
         } catch (PDOException $e) {
-            echo $e->getMessage();
-
-            $log = new Log();
-            $log->observaciones = $e->getMessage();
-            $log->guardar();
-
+            $error= new Log();
+            $error->idUsuario = $this->id;
+            $error->observaciones = $e->getMessage();
+            $error->ip = $_SERVER['REMOTE_ADDR'];
+            $error->fechaHora = date('Y-m-d H:i:s');
+            $error->navegador = get_browser();
+            $error->navegador = $_SERVER['HTTP_USER_AGENT'];
+            $error->sistemaOperativo = PHP_OS;
+            $error->guardar();
+            return false;
         }
 
         $resultado = array();      
         $resultado['rows'] = $datos;
-
         echo json_encode($resultado);
-
         break;
 }

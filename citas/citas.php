@@ -106,7 +106,7 @@ if (!$permisosWeb->permitido) {
 
     function operateFormatter(value, row, index) {
         return [
-            '<div class="text-center">',            
+            '<div class="text-center">',
             '<a class="modificarCita" href="javascript:void(0)" title="Modificar Cita">',
             '<i class="fas fa-edit"></i>',
             '</a>  ',
